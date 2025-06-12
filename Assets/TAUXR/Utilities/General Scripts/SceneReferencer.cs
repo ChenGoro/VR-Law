@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-// Stores references for everything needer to refer to in the scene.
 public class SceneReferencer : TXRSingleton<SceneReferencer>
 {
-    //[Header("Configurations")]
 
+    public Instructions instructions;
+    public LegalScenario legalScenario;
+    public BoxesManager boxesManager;
+    public VR_Button continueButton;
 
-    //[Header("Objects")]
-
-    
 
 }
