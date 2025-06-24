@@ -11,7 +11,8 @@ public class MainExperiment : MonoBehaviour
         await SceneReferencer.Instance.instructions.ShowUntilConfirm();
         await SceneReferencer.Instance.legalScenario.ShowUntilConfirm();
         await SceneReferencer.Instance.boxesManager.ShowBoxesAndWaitForAll();
-        await WaitForVRButtonPress(SceneReferencer.Instance.continueButton);
+
+        bool choice = await SceneReferencer.Instance.bail.ShowUntilChoiceMade();
 
     }
 

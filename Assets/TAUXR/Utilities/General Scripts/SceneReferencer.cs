@@ -7,6 +7,6 @@ public class SceneReferencer : TXRSingleton<SceneReferencer>
     public LegalScenario legalScenario;
     public BoxesManager boxesManager;
     public VR_Button continueButton;
-
+    public Bail bail;
 
 }

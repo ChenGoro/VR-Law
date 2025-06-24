@@ -9,7 +9,7 @@ public class BoxesManager : MonoBehaviour
 
     private int viewedCount = 0;
     private UniTaskCompletionSource allBoxesViewedTCS;
-
+    private UniTaskCompletionSource ContinuePressedTCS;
     private void Start()
     {
         Hide();
@@ -31,18 +31,35 @@ public class BoxesManager : MonoBehaviour
         viewedCount = 0;
         allBoxesViewedTCS = new UniTaskCompletionSource();
 
+        Debug.Log("inside BoxesManagers ShowBoxesAndWaitForAll before for each");
+
         foreach (var box in boxes)
         {
             box.gameObject.SetActive(true);
             box.Init(OnBoxViewed);
+
+            Debug.Log("inside BoxesManagers ShowBoxesAndWaitForAll after for each");
         }
 
         await allBoxesViewedTCS.Task;
 
         if (continueButton != null)
+        { 
             continueButton.gameObject.SetActive(true);
-    }
+            ContinuePressedTCS = new UniTaskCompletionSource();
+            continueButton.VRButtonPressed.AddListener(OnContinuePressed);
+            await ContinuePressedTCS.Task;
+            continueButton.VRButtonPressed.RemoveAllListeners();
+            Hide();
 
+
+
+        }
+    }
+private void OnContinuePressed()
+    {
+        ContinuePressedTCS.TrySetResult();
+    }
     private void OnBoxViewed()
     {
         viewedCount++;

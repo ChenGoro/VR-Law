@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Box : MonoBehaviour
 {
@@ -25,12 +26,17 @@ public class Box : MonoBehaviour
         boxMesh.SetActive(true);
         title.SetActive(true);
         content.SetActive(false);
-
+        Debug.Log("inside box init before if");
         if (closeButton != null)
         {
             closeButton.gameObject.SetActive(false);
             closeButton.VRButtonPressed.RemoveAllListeners();
             closeButton.VRButtonPressed.AddListener(HideContent);
+
+
+            Debug.Log("inside box init after if");
+
+
         }
     }
 
@@ -72,10 +78,7 @@ public class Box : MonoBehaviour
         if (closeButton != null)
             closeButton.gameObject.SetActive(false);
 
-        if (boxMesh != null)
-            boxMesh.SetActive(false);
 
-        if (title != null)
-            title.SetActive(false); // 
+
     }
 }
