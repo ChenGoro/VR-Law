@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1449196869084097075
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1196731207776251751, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196731207776251751, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196731207776251751, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196731207776251751, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196731207776251751, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196731207776251751, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196731207776251751, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196731207776251751, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196731207776251751, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1196731207776251751, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1353169308043071206, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_text
+      value: Joe has no prior criminal history, is steadily employed, and has strong
+        family ties in the local community. She has cooperated fully with investigators,
+        and she is willing to surrender her driver's license.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1741889627329219797, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_Name
+      value: BoxesManager-Scenario004 (Variant)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113955785577874808, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_text
+      value: 'Doe is a potential danger to the community due to impaired driving
+        behavior. We have blood-alcohol tests and witness statements indicating that
+        Doe is a reckless driver. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 4199704275101381363, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 55617381be64216468de2786ede63301, type: 3}
+    - target: {fileID: 9158941319938099289, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 0c54590d603ddce418898aed11a13c33, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d7c193c276ca653428c77dc001a52ada, type: 3}

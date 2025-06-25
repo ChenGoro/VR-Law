@@ -329,9 +329,39 @@ MonoBehaviour:
   - scenarioName: tesst scenario 2
     legalScenarioPrefab: {fileID: 7503097635992751709, guid: 6a60a8bc7e45b754694f9c96d2676f62,
       type: 3}
-    boxesPrefab: {fileID: 878478715795334886, guid: ea40b1131ff5baf47815855724e503f7,
+    boxesPrefab: {fileID: 878478715795334886, guid: 28c454e106d995e41bd22e4334b6f8a3,
       type: 3}
-    endSenarioInstructionsPrefab: {fileID: 1235356474867818515, guid: 173d74179bbbfc443b7ab5835be6c95d,
+    endSenarioInstructionsPrefab: {fileID: 1235356474867818515, guid: aa1b94fd16ddae14a926a19cebd5bd8a,
+      type: 3}
+    desicionPrefab: {fileID: 3065385290536760724, guid: 64dc0d379a4844145b03ee760c8fc855,
+      type: 3}
+    decisionType: 0
+  - scenarioName: tesst scenario 3
+    legalScenarioPrefab: {fileID: 7503097635992751709, guid: 9ef71e242f30a534595ac4b09abb2788,
+      type: 3}
+    boxesPrefab: {fileID: 878478715795334886, guid: ce0877913efc6d549ab49a110203d84f,
+      type: 3}
+    endSenarioInstructionsPrefab: {fileID: 1235356474867818515, guid: a194f63357918934a90cdc2d69356375,
+      type: 3}
+    desicionPrefab: {fileID: 3065385290536760724, guid: 64dc0d379a4844145b03ee760c8fc855,
+      type: 3}
+    decisionType: 0
+  - scenarioName: tesst scenario 4
+    legalScenarioPrefab: {fileID: 7503097635992751709, guid: d31b98653fea63c43b0baff4f4d0bf73,
+      type: 3}
+    boxesPrefab: {fileID: 878478715795334886, guid: ec5420eb6105bbd44a0e81c1aa53fe5c,
+      type: 3}
+    endSenarioInstructionsPrefab: {fileID: 1235356474867818515, guid: 8a00b4dabd0269347a37aba20033e3cd,
+      type: 3}
+    desicionPrefab: {fileID: 3065385290536760724, guid: 64dc0d379a4844145b03ee760c8fc855,
+      type: 3}
+    decisionType: 0
+  - scenarioName: tesst scenario 5
+    legalScenarioPrefab: {fileID: 7503097635992751709, guid: 5874bc9ec8725cd47876d50a947faaf0,
+      type: 3}
+    boxesPrefab: {fileID: 878478715795334886, guid: 2afa407d55e385d45ae6c7f703ec0390,
+      type: 3}
+    endSenarioInstructionsPrefab: {fileID: 1235356474867818515, guid: aad034ac1e631c54ab40fbf141180725,
       type: 3}
     desicionPrefab: {fileID: 3065385290536760724, guid: 64dc0d379a4844145b03ee760c8fc855,
       type: 3}
