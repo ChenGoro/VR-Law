@@ -58,10 +58,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1353169308043071206, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_text
+      value: Doe has no prior criminal convictions, maintains steady employment,
+        and has family ties within the community. He does not pose a flight risk.
+        Doe maintains that he is innocent and has cooperated with law enforcement.
+      objectReference: {fileID: 0}
     - target: {fileID: 1741889627329219797, guid: d7c193c276ca653428c77dc001a52ada,
         type: 3}
       propertyPath: m_Name
       value: BoxesManager-Scenario002 (Variant)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113955785577874808, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_text
+      value: The rape charge is supported by witness statements and medical reports.
+        Doe poses a danger to the community and the complainant if released.
       objectReference: {fileID: 0}
     - target: {fileID: 4199704275101381363, guid: d7c193c276ca653428c77dc001a52ada,
         type: 3}

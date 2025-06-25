@@ -13,6 +13,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: end scenario instructions002 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2353800192048490289, guid: 53a0d35dd654b364aaa46ae191c1b15f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.022
+      objectReference: {fileID: 0}
+    - target: {fileID: 2353800192048490289, guid: 53a0d35dd654b364aaa46ae191c1b15f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2880971707355015244, guid: 53a0d35dd654b364aaa46ae191c1b15f,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 3.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 2880971707355015244, guid: 53a0d35dd654b364aaa46ae191c1b15f,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1.4
+      objectReference: {fileID: 0}
     - target: {fileID: 3059267180972768202, guid: 53a0d35dd654b364aaa46ae191c1b15f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -66,12 +86,17 @@ PrefabInstance:
     - target: {fileID: 5020509872579758519, guid: 53a0d35dd654b364aaa46ae191c1b15f,
         type: 3}
       propertyPath: m_text
-      value: Next
+      value: Continue
       objectReference: {fileID: 0}
     - target: {fileID: 5020509872579758519, guid: 53a0d35dd654b364aaa46ae191c1b15f,
         type: 3}
       propertyPath: m_fontSize
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5020509872579758519, guid: 53a0d35dd654b364aaa46ae191c1b15f,
+        type: 3}
+      propertyPath: m_margin.x
+      value: -0.050916463
       objectReference: {fileID: 0}
     - target: {fileID: 5020509872579758519, guid: 53a0d35dd654b364aaa46ae191c1b15f,
         type: 3}
@@ -81,7 +106,8 @@ PrefabInstance:
     - target: {fileID: 6586982468603011150, guid: 53a0d35dd654b364aaa46ae191c1b15f,
         type: 3}
       propertyPath: m_text
-      value: end of scenario 2
+      value: "You\u2019ve completed the scenario.\nClick \"Continue\" to begin the
+        next scenario:\n\n\n\n"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

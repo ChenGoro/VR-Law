@@ -63,6 +63,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3630030078948328065, guid: 5ebad9bfbcb2117469c3531381ad3194,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 3.82
+      objectReference: {fileID: 0}
     - target: {fileID: 4892174798880856042, guid: 5ebad9bfbcb2117469c3531381ad3194,
         type: 3}
       propertyPath: m_Name
@@ -71,8 +76,8 @@ PrefabInstance:
     - target: {fileID: 9108064393460267976, guid: 5ebad9bfbcb2117469c3531381ad3194,
         type: 3}
       propertyPath: m_text
-      value: Matt Cohen, 30, was arrested and charged with burglary for allegedly
-        breaking into a convenience store at night.
+      value: John Doe, 32, has been charged with rape following allegations that
+        he sexually assaulted an acquaintance after a party.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
