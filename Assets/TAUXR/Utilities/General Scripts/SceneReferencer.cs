@@ -3,10 +3,10 @@ using UnityEngine;
 public class SceneReferencer : TXRSingleton<SceneReferencer>
 {
 
-    public Instructions instructions;
-    public LegalScenario legalScenario;
-    public BoxesManager boxesManager;
+    public Instructions generalInstructions;
+
     public VR_Button continueButton;
-    public Bail bail;
+    
+    public ScenarioLoader scenarioLoader;
 
 }

@@ -6,7 +6,10 @@ public class LegalScenario : MonoBehaviour
 {
     [SerializeField] private VR_Button confirmButton;
 
-    private void Start() => Hide();
+    private void Start()
+    {
+
+    }
 
     public async UniTask ShowUntilConfirm()
     {

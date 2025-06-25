@@ -1,19 +1,32 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Events;
+using Oculus.Interaction.Samples;
 
 public class MainExperiment : MonoBehaviour
 {
+    SceneReferencer sceneReferencer;
     private async void Start()
     {
+        Init();
         await UniTask.Yield();
 
-        await SceneReferencer.Instance.instructions.ShowUntilConfirm();
-        await SceneReferencer.Instance.legalScenario.ShowUntilConfirm();
-        await SceneReferencer.Instance.boxesManager.ShowBoxesAndWaitForAll();
+        await sceneReferencer.generalInstructions.ShowUntilConfirm();
 
-        bool choice = await SceneReferencer.Instance.bail.ShowUntilChoiceMade();
+        ScenarioLoader scenarioLoader = sceneReferencer.scenarioLoader;
+        while (scenarioLoader.HasNext())
+        {
+            Scenario currentScenario = scenarioLoader.GetNextScenario();
+            await currentScenario.PlayScenario();
+        }
+        
 
+    }
+
+    private void Init()
+    {
+        sceneReferencer = SceneReferencer.Instance;
+        sceneReferencer.generalInstructions.Hide();
     }
 
     private async UniTask WaitForVRButtonPress(VR_Button button)

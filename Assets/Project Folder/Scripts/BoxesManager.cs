@@ -12,7 +12,7 @@ public class BoxesManager : MonoBehaviour
     private UniTaskCompletionSource ContinuePressedTCS;
     private void Start()
     {
-        Hide();
+        continueButton.gameObject.SetActive(false);
     }
 
     private void Hide()

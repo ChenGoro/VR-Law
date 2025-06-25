@@ -17,7 +17,7 @@ public class Bail : MonoBehaviour
     UniTaskCompletionSource tcs;
     private void Start()
     {
-        Hide();
+
     }
     public async UniTask<bool> ShowUntilChoiceMade()
     {
