@@ -319,6 +319,8 @@ MonoBehaviour:
   - scenarioName: tesst scenario 1
     legalScenarioPrefab: {fileID: 7503097635992751709, guid: 0d057b8cd7c808940b08f9b3bc6274e6,
       type: 3}
+    boxesInstructionsPrefab: {fileID: 7586912158694599002, guid: 592a1eadef2848e4694bd5a2cacb212d,
+      type: 3}
     boxesPrefab: {fileID: 878478715795334886, guid: d63ceef9fda8acc439b2c094d7e37d49,
       type: 3}
     endSenarioInstructionsPrefab: {fileID: 1235356474867818515, guid: 17cb514ff9598ae459ab2fba48714594,
@@ -328,6 +330,8 @@ MonoBehaviour:
     decisionType: 0
   - scenarioName: tesst scenario 2
     legalScenarioPrefab: {fileID: 7503097635992751709, guid: 6a60a8bc7e45b754694f9c96d2676f62,
+      type: 3}
+    boxesInstructionsPrefab: {fileID: 7586912158694599002, guid: 592a1eadef2848e4694bd5a2cacb212d,
       type: 3}
     boxesPrefab: {fileID: 878478715795334886, guid: 28c454e106d995e41bd22e4334b6f8a3,
       type: 3}
@@ -339,6 +343,8 @@ MonoBehaviour:
   - scenarioName: tesst scenario 3
     legalScenarioPrefab: {fileID: 7503097635992751709, guid: 9ef71e242f30a534595ac4b09abb2788,
       type: 3}
+    boxesInstructionsPrefab: {fileID: 7586912158694599002, guid: 592a1eadef2848e4694bd5a2cacb212d,
+      type: 3}
     boxesPrefab: {fileID: 878478715795334886, guid: ce0877913efc6d549ab49a110203d84f,
       type: 3}
     endSenarioInstructionsPrefab: {fileID: 1235356474867818515, guid: a194f63357918934a90cdc2d69356375,
@@ -349,6 +355,8 @@ MonoBehaviour:
   - scenarioName: tesst scenario 4
     legalScenarioPrefab: {fileID: 7503097635992751709, guid: d31b98653fea63c43b0baff4f4d0bf73,
       type: 3}
+    boxesInstructionsPrefab: {fileID: 7586912158694599002, guid: 592a1eadef2848e4694bd5a2cacb212d,
+      type: 3}
     boxesPrefab: {fileID: 878478715795334886, guid: ec5420eb6105bbd44a0e81c1aa53fe5c,
       type: 3}
     endSenarioInstructionsPrefab: {fileID: 1235356474867818515, guid: 8a00b4dabd0269347a37aba20033e3cd,
@@ -358,6 +366,8 @@ MonoBehaviour:
     decisionType: 0
   - scenarioName: tesst scenario 5
     legalScenarioPrefab: {fileID: 7503097635992751709, guid: 5874bc9ec8725cd47876d50a947faaf0,
+      type: 3}
+    boxesInstructionsPrefab: {fileID: 7586912158694599002, guid: 592a1eadef2848e4694bd5a2cacb212d,
       type: 3}
     boxesPrefab: {fileID: 878478715795334886, guid: 2afa407d55e385d45ae6c7f703ec0390,
       type: 3}
@@ -662,6 +672,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1930651605286045249}
     m_Modifications:
+    - target: {fileID: 1237124089979287210, guid: 53a0d35dd654b364aaa46ae191c1b15f,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
     - target: {fileID: 1759845106626480182, guid: 53a0d35dd654b364aaa46ae191c1b15f,
         type: 3}
       propertyPath: m_Name
@@ -722,6 +737,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6586982468603011150, guid: 53a0d35dd654b364aaa46ae191c1b15f,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

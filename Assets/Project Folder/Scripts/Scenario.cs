@@ -11,6 +11,7 @@ public class Scenario
     [Serialize]
     public string scenarioName;
     public GameObject legalScenarioPrefab;
+    public GameObject boxesInstructionsPrefab;
     public GameObject boxesPrefab;
     public GameObject endSenarioInstructionsPrefab;
     public GameObject desicionPrefab;
@@ -20,6 +21,7 @@ public class Scenario
     public async UniTask PlayScenario()
     {
         await PlayLegalScenario();
+        await PlayBoxesInstructions();
         await PlayBoxes();
         await PlayDesicion();
         await PlayEndScenarioInstructions();
@@ -71,6 +73,15 @@ public class Scenario
     private async UniTask PlayEndScenarioInstructions()
     {
         GameObject InstructionsInstance = GameObject.Instantiate(endSenarioInstructionsPrefab, ScenarioLoader.Instance.transform);
+        Instructions instructionsComponent = InstructionsInstance.GetComponent<Instructions>();
+
+        await instructionsComponent.ShowUntilConfirm();
+        GameObject.Destroy(InstructionsInstance);
+    }
+
+    private async UniTask PlayBoxesInstructions()
+    {
+        GameObject InstructionsInstance = GameObject.Instantiate(boxesInstructionsPrefab, ScenarioLoader.Instance.transform);
         Instructions instructionsComponent = InstructionsInstance.GetComponent<Instructions>();
 
         await instructionsComponent.ShowUntilConfirm();
