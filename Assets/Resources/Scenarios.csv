@@ -1,0 +1,6 @@
+Description, ScenarioType, CrimeType, ProsecutorStatement, AttorneyStatement
+a,Bail,Burglary,a,a
+b,Scentencing,Murder,b,b
+c,Bail,Rape,c,C
+d,Bail,VehicularManslaughter,d,d
+e,Bail,Fraud,e,e
