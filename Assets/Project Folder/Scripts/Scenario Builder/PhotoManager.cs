@@ -8,7 +8,7 @@ public class PhotoManager : MonoBehaviour
     public PhotoQueue DefendantQueue { get; private set; }
     public PhotoQueue VictimQueue { get; private set; }
 
-    private void Start()
+    public void Init()
     {
         List<Photo> allPhotos = LoadAllPhotos(resourcesFolder);
         BuildQueues(allPhotos);
@@ -37,9 +37,12 @@ public class PhotoManager : MonoBehaviour
         List<Photo> malePhotos = allPhotos.FindAll(p => p.Gender == Gender.Male);
 
         ShuffleList(malePhotos); // Randomize male photos
+        ShuffleList(femalePhotos);
 
         int halfMaleCount = malePhotos.Count / 2;
 
+
+        //TODO figure out the correct way so separate the number of males to defendant and victim 
         // If odd number of male photos, leave one out and log it
         if (malePhotos.Count % 2 != 0)
         {

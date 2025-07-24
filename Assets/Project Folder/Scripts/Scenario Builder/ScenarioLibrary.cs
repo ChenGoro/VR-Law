@@ -7,7 +7,7 @@ public class ScenarioLibrary : MonoBehaviour
 
     public string csvFilePath = "scenarios"; // without .csv, in Resources
 
-    private void Awake()
+    public void Init()
     {
         Templates = LoadTemplatesFromCSV(csvFilePath);
     }
@@ -54,7 +54,7 @@ public class ScenarioLibrary : MonoBehaviour
             }
             catch (System.Exception ex)
             {
-                Debug.LogWarning($"Error parsing line {i + 1}: {ex.Message}");
+                Debug.LogError($"Error parsing line {i + 1}: {ex.Message}");
             }
         }
 

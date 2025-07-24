@@ -16,6 +16,8 @@ public class ScenarioManager : MonoBehaviour
 
     private void Start()
     {
+        ScenarioLibrary.Init();
+        PhotoManager.Init();
         BuildScenarioDataList();
     }
 
@@ -43,6 +45,9 @@ public class ScenarioManager : MonoBehaviour
 
             int[] layoutOrder = GenerateRandomLayoutOrder();
 
+            template.AddNamesToStatements(defFirst, defLast, vicFirst, vicLast);
+
+
             ScenarioData scenario = new ScenarioData(
                 template,
                 layoutOrder,
@@ -60,6 +65,8 @@ public class ScenarioManager : MonoBehaviour
         Debug.Log($"Initialized {scenarioDataList.Count} scenarios.");
     }
 
+
+
     public ScenarioData GetNextScenario()
     {
         if (currentScenarioIndex >= scenarioDataList.Count)
@@ -69,6 +76,11 @@ public class ScenarioManager : MonoBehaviour
         }
 
         return scenarioDataList[currentScenarioIndex++];
+    }
+
+    public bool HasNextScenario()
+    {
+        return currentScenarioIndex <= scenarioDataList.Count - 1;
     }
 
     private int[] GenerateRandomLayoutOrder()

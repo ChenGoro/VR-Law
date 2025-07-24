@@ -1,11 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using TMPro;
 
 public class BoxesManager : MonoBehaviour
 {
     public List<Box> boxes;
     public VR_Button continueButton;
+
+    public TextMeshPro ProsecutorStatement;
+    public TextMeshPro AttorneyStatement;
+    public SpriteRenderer DefandantPhoto;
+    public SpriteRenderer VictimPhoto;
 
     private int viewedCount = 0;
     private UniTaskCompletionSource allBoxesViewedTCS;
@@ -15,7 +21,16 @@ public class BoxesManager : MonoBehaviour
         continueButton.gameObject.SetActive(false);
     }
 
-    private void Hide()
+
+    public void LoadScenarioAssets(ScenarioData scenario)
+    {
+        ProsecutorStatement.text = scenario.ProcecutorStatement;
+        AttorneyStatement.text = scenario.AttorneyStatement;
+        DefandantPhoto.sprite = scenario.DefendantPhoto;
+        VictimPhoto.sprite = scenario.VictimPhoto;
+    }
+
+    public void Hide()
     {
         gameObject.SetActive(false);
         foreach (var box in boxes)
@@ -51,9 +66,7 @@ public class BoxesManager : MonoBehaviour
             await ContinuePressedTCS.Task;
             continueButton.VRButtonPressed.RemoveAllListeners();
             Hide();
-
-
-
+            viewedCount = 0;
         }
     }
 private void OnContinuePressed()

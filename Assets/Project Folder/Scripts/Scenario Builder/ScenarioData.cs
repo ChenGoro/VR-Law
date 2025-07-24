@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ScenarioData
@@ -49,7 +50,7 @@ public class ScenarioData
 
 public enum ScenarioType
 {
-    Bail, Scentencing
+    Bail, Sentencing
 }
 
 public enum CrimeType
@@ -58,26 +59,46 @@ public enum CrimeType
 }
 
 
-public class ScenarioTemplate
-{
-    public string Description { get; private set; }
-    public ScenarioType ScenarioType { get; private set; }
-    public CrimeType CrimeType { get; private set; }
 
-    public string ProsecutorStatement { get; private set; }
-    public string AttorneyStatement { get; private set; }
-
-    public ScenarioTemplate(
-        string description,
-        ScenarioType scenarioType,
-        CrimeType crimeType,
-        string prosecutorStatement,
-        string attorneyStatement)
+    public class ScenarioTemplate
     {
-        Description = description;
-        ScenarioType = scenarioType;
-        CrimeType = crimeType;
-        ProsecutorStatement = prosecutorStatement;
-        AttorneyStatement = attorneyStatement;
+        public string Description { get; private set; }
+        public ScenarioType ScenarioType { get; private set; }
+        public CrimeType CrimeType { get; private set; }
+        public string ProsecutorStatement { get; private set; }
+        public string AttorneyStatement { get; private set; }
+
+        public ScenarioTemplate(
+            string description,
+            ScenarioType scenarioType,
+            CrimeType crimeType,
+            string prosecutorStatement,
+            string attorneyStatement)
+        {
+            Description = description;
+            ScenarioType = scenarioType;
+            CrimeType = crimeType;
+            ProsecutorStatement = prosecutorStatement;
+            AttorneyStatement = attorneyStatement;
+        }
+
+        public void AddNamesToStatements(string defandantFirstName, string defandantLastName, string victimFirstName, string victimLastName)
+        {
+            Dictionary<string, string> namesCodes = new Dictionary<string, string>
+        {
+            { "*defandantFirstName*", defandantFirstName },
+            { "*defandantLastName*", defandantLastName },
+            { "*victimFirstName*", victimFirstName },
+            { "*victimLastName*", victimLastName }
+        };
+
+            foreach (var pair in namesCodes)
+            {
+                ProsecutorStatement = ProsecutorStatement.Replace(pair.Key, pair.Value);
+                AttorneyStatement = AttorneyStatement.Replace(pair.Key, pair.Value);
+            }
+        }
     }
-}
+
+
+

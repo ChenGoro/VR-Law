@@ -13,11 +13,12 @@ public class MainExperiment : MonoBehaviour
 
         await sceneReferencer.generalInstructions.ShowUntilConfirm();
 
-        ScenarioLoader scenarioLoader = sceneReferencer.scenarioLoader;
-        while (scenarioLoader.HasNext())
+        ScenarioManager scenarioManager = sceneReferencer.scenarioManager;
+        ScenarioPlayer scenarioPlayer = sceneReferencer.scenarioPlayer;
+        while (scenarioManager.HasNextScenario())
         {
-            Scenario currentScenario = scenarioLoader.GetNextScenario();
-            await currentScenario.PlayScenario();
+            ScenarioData currentScenario = scenarioManager.GetNextScenario();
+            await scenarioPlayer.PlayScenario(currentScenario);
         }
         
 

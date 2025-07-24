@@ -7,6 +7,8 @@ public class SceneReferencer : TXRSingleton<SceneReferencer>
 
     public VR_Button continueButton;
     
-    public ScenarioLoader scenarioLoader;
+    //public ScenarioLoader scenarioLoader;
+    public ScenarioManager scenarioManager;
+    public ScenarioPlayer scenarioPlayer;
 
 }

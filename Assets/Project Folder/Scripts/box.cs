@@ -22,7 +22,7 @@ public class Box : MonoBehaviour
     public void Init(System.Action onViewedCallback)
     {
         onBoxViewed = onViewedCallback;
-
+        wasOpened = false;
         boxMesh.SetActive(true);
         title.SetActive(true);
         content.SetActive(false);

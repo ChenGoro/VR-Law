@@ -1,8 +1,11 @@
+using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ScenarioLoader : TXRSingleton<ScenarioLoader>
 {
+    [ReadOnly]
+    [InfoBox("auto populated with scenarios")]
     public List<Scenario> scenarioList;
     private List<int> scenarioIndexList;
 
