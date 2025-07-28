@@ -1,14 +1,16 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Events;
+using TMPro;
 
 public class Instructions : MonoBehaviour
 {
     [SerializeField] private VR_Button confirmButton;
+    [SerializeField] private TextMeshPro instructionText;
 
-    private void Start()
+    public void LoadScenarioAssets(ScenarioData scenarioData)
     {
-
+        instructionText.text = scenarioData.ScenarioDescription;
     }
 
     public async UniTask ShowUntilConfirm()

@@ -15,6 +15,9 @@ public class MainExperiment : MonoBehaviour
 
         ScenarioManager scenarioManager = sceneReferencer.scenarioManager;
         ScenarioPlayer scenarioPlayer = sceneReferencer.scenarioPlayer;
+        
+        
+        
         while (scenarioManager.HasNextScenario())
         {
             ScenarioData currentScenario = scenarioManager.GetNextScenario();

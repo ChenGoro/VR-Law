@@ -22,31 +22,50 @@ public class ScenarioPlayer : MonoBehaviour
 
     public async UniTask PlayScenario(ScenarioData scenarioData)
     {
+        await PlayLegalScenario(scenarioData);
+        await PlayBoxesInstructions(scenarioData);
         await PlayBoxes(scenarioData);
+        await PlayDesicion(scenarioData);
+        await PlayEndScenarioInstructions(scenarioData);
     }
 
     private async UniTask PlayLegalScenario(ScenarioData scenarioData)
     {
-        // TODO
-
+        legalScenario.LoadScenarioAssets(scenarioData);
+        await legalScenario.ShowUntilConfirm();
     }
 
     private async UniTask PlayBoxesInstructions(ScenarioData scenarioData)
     {
-        //TODO
+        boxesInstructions.LoadScenarioAssets(scenarioData);
+        await boxesInstructions.ShowUntilConfirm();
     }
+
     private async UniTask PlayBoxes(ScenarioData scenarioData)
     {
         boxes.LoadScenarioAssets(scenarioData);
         await boxes.ShowBoxesAndWaitForAll();
     }
+
     private async UniTask PlayDesicion(ScenarioData scenarioData)
     {
-        //TODO
-    }
-    private async UniTask PlayEndScenarioInstructions(ScenarioData scenarioData)
-    {
-        //TODO
+        switch (scenarioData.ScenarioType)
+        {
+            case ScenarioType.Bail:
+                bailDecision.LoadScenarioAssets(scenarioData);
+                bool bailChoice = await bailDecision.ShowUntilChoiceMade();
+                TXRDataManager.Instance.LogLineToFile($"{scenarioData.ScenarioDescription}: bail choice = {bailChoice}");
+                break;
+
+            case ScenarioType.Sentencing:
+                Debug.Log("No sentencing component implemented yet");
+                break;
+        }
     }
 
+    private async UniTask PlayEndScenarioInstructions(ScenarioData scenarioData)
+    {
+        endSenarioInstructions.LoadScenarioAssets(scenarioData);
+        await endSenarioInstructions.ShowUntilConfirm();
+    }
 }

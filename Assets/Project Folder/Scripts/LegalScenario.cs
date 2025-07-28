@@ -1,19 +1,21 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Events;
+using TMPro;
 
 public class LegalScenario : MonoBehaviour
 {
     [SerializeField] private VR_Button confirmButton;
+    [SerializeField] private TextMeshPro scenarioText;
 
-    private void Start()
+    public void LoadScenarioAssets(ScenarioData scenarioData)
     {
-
+        scenarioText.text = scenarioData.ScenarioDescription;
     }
 
     public async UniTask ShowUntilConfirm()
     {
-        Show();
+        gameObject.SetActive(true);
         await UniTask.Delay(1000);
 
         var tcs = new UniTaskCompletionSource();
@@ -23,9 +25,8 @@ public class LegalScenario : MonoBehaviour
         await tcs.Task;
         confirmButton.VRButtonPressed.RemoveListener(onPressed);
 
-        Hide();
+        gameObject.SetActive(false);
     }
 
-    public void Show() => gameObject.SetActive(true);
     public void Hide() => gameObject.SetActive(false);
 }
