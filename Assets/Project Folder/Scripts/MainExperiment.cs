@@ -5,6 +5,10 @@ using Oculus.Interaction.Samples;
 
 public class MainExperiment : MonoBehaviour
 {
+    /// <summary>
+    /// main experiment flow runner. it uses scenario manager to load the scenarios, and scenarioplayer to play each scenario.
+    /// runs the general instruction for the begiining of the experiment.
+    /// </summary>
     SceneReferencer sceneReferencer;
     private async void Start()
     {

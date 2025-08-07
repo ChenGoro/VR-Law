@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class ScenarioData
 {
+    /// <summary>
+    /// a container class for all the data nescacary to run a trial.
+    /// </summary>
     public ScenarioType ScenarioType { get; private set; }
     public CrimeType CrimeType { get; private set; }
 
@@ -61,6 +64,9 @@ public enum CrimeType
 
 
     public class ScenarioTemplate
+    /*
+     * sub container for the scenario specific data. while photos and names change, scenario tenplate data stays the same for all runs
+     */
     {
         public string Description { get; private set; }
         public ScenarioType ScenarioType { get; private set; }

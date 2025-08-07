@@ -4,6 +4,9 @@ public enum Gender { Male, Female }
 public enum Race { Black, White }
 
 public class Photo
+    /*
+     * container class for photo data
+     */
 {
     public Sprite Sprite { get; private set; }
     public Gender Gender { get; private set; }

@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PhotoManager : MonoBehaviour
+    /*
+     * in charge of loading the photo assets, putting them in queues and shuffles them
+     */
 {
     public string resourcesFolder = "Photos"; // Folder under Resources/
 

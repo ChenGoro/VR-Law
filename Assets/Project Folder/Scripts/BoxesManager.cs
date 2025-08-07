@@ -5,6 +5,10 @@ using TMPro;
 
 public class BoxesManager : MonoBehaviour
 {
+    /// <summary>
+    /// in charge of the four boxes game objects in each scenario. has a list of boxes, the contents (statements+photos), continue button.
+    /// loads the assets to the boxes prefab, controls the visibility (showing and hiding) the boxes stage in the experiment.
+    /// </summary>
     public List<Box> boxes;
     public VR_Button continueButton;
 

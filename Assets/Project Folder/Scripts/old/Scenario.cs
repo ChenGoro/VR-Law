@@ -7,6 +7,7 @@ using UnityEngine;
 
 [Serializable]
 public class Scenario
+    
 {
     [Serialize]
     public string scenarioName;

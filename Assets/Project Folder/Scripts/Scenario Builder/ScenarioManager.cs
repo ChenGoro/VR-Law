@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ScenarioManager : MonoBehaviour
+    /*
+     * in charge of taking the templates from the scenariolibrary, adding them with random photos and names and organizing the scenarioData objects
+     * with all the data neccary for a round.
+     * iterable class for looping over the full scenarios
+     */
 {
     public ScenarioLibrary ScenarioLibrary;
     public PhotoManager PhotoManager;

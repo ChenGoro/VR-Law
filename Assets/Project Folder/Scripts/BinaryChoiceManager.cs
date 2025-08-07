@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class BinaryChoiceManager : MonoBehaviour
+    /***
+     * in charge of the 2 choice buttons game object
+     */
 {
 
     public VR_Button YesButton;

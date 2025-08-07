@@ -10,6 +10,7 @@ public class Instructions : MonoBehaviour
 
     public void LoadScenarioAssets(ScenarioData scenarioData)
     {
+        Debug.Log($"[Instructions] instructionText = {instructionText}, instructionText.text = {instructionText.text}, scenarioData = {scenarioData}, scenarioData.ScenarioDescription = {scenarioData.ScenarioDescription}");
         instructionText.text = scenarioData.ScenarioDescription;
     }
 

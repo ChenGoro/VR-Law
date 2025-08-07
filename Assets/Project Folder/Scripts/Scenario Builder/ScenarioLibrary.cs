@@ -1,8 +1,15 @@
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using System.Text.RegularExpressions;
+using System.Linq;
+using System;
 
 public class ScenarioLibrary : MonoBehaviour
 {
+    /// <summary>
+    /// scenario templates library. in charge of loading the templates from the csv file and outting them in ScenarioTemplate objects.
+    /// </summary>
     public List<ScenarioTemplate> Templates { get; private set; }
 
     public string csvFilePath = "scenarios"; // without .csv, in Resources
@@ -15,7 +22,7 @@ public class ScenarioLibrary : MonoBehaviour
     public ScenarioTemplate GetRandomTemplate()
     {
         if (Templates.Count == 0) return null;
-        return Templates[Random.Range(0, Templates.Count)];
+        return Templates[UnityEngine.Random.Range(0, Templates.Count)];
     }
 
     private List<ScenarioTemplate> LoadTemplatesFromCSV(string resourcePath)
@@ -45,8 +52,13 @@ public class ScenarioLibrary : MonoBehaviour
             try
             {
                 string desc = fields[0];
-                ScenarioType type = (ScenarioType)System.Enum.Parse(typeof(ScenarioType), fields[1]);
-                CrimeType crime = (CrimeType)System.Enum.Parse(typeof(CrimeType), fields[2]);
+
+                if (!Enum.TryParse(fields[1], out ScenarioType type))
+                    throw new System.Exception($"Invalid ScenarioType value: '{fields[1]}'");
+
+                if (!Enum.TryParse(fields[2], out CrimeType crime))
+                    throw new System.Exception($"Invalid CrimeType value: '{fields[2]}'");
+
                 string prosecutor = fields[3];
                 string attorney = fields[4];
 
@@ -56,6 +68,7 @@ public class ScenarioLibrary : MonoBehaviour
             {
                 Debug.LogError($"Error parsing line {i + 1}: {ex.Message}");
             }
+
         }
 
         return templates;
@@ -64,30 +77,9 @@ public class ScenarioLibrary : MonoBehaviour
     // Handles commas inside quotes
     private string[] SplitCSVLine(string line)
     {
-        List<string> result = new List<string>();
-        bool inQuotes = false;
-        string current = "";
-
-        foreach (char c in line)
-        {
-            if (c == '\"')
-            {
-                inQuotes = !inQuotes;
-                continue;
-            }
-
-            if (c == ',' && !inQuotes)
-            {
-                result.Add(current);
-                current = "";
-            }
-            else
-            {
-                current += c;
-            }
-        }
-
-        result.Add(current); // Add last one
-        return result.ToArray();
+        var matches = Regex.Matches(line, @"(?:^|,)(?:""(?<val>(?:[^""]|"""")*)""|(?<val>[^"",]*))");
+        return matches.Cast<Match>()
+                      .Select(m => m.Groups["val"].Value.Replace("\"\"", "\"")) // unescape double quotes
+                      .ToArray();
     }
 }

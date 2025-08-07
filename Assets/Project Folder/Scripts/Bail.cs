@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class Bail : MonoBehaviour
+    /***
+     * in charge of the bail game component, has the text prompt (textMeshPro) and the choices buttons (binaryChoiceManager)
+     */
 {
     [SerializeField] private BinaryChoiceManager ChoiceManager;
     [SerializeField] private TextMeshPro text;

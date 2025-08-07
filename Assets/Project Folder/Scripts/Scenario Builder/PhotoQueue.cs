@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 
 public class PhotoQueue
+    /*
+     * iterable container for a list of photos, already shuffled and loaded by photo manager.
+     * gets the next photo in line
+     */
 {
     private List<Photo> photos;
     private List<int> randomOrder;
