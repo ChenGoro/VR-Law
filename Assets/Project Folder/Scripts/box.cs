@@ -66,6 +66,7 @@ public class Box : MonoBehaviour
         if (!wasOpened)
         {
             wasOpened = true;
+            TXRDataManager.Instance.LogLineToFile($"player opened box. title: {title}, content: {content}");
             onBoxViewed?.Invoke();
         }
     }

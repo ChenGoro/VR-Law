@@ -16,6 +16,7 @@ public class MainExperiment : MonoBehaviour
         await UniTask.Yield();
 
         await sceneReferencer.generalInstructions.ShowUntilConfirm();
+        TXRDataManager.Instance.LogLineToFile("confirmed starting instructions");
 
         ScenarioManager scenarioManager = sceneReferencer.scenarioManager;
         ScenarioPlayer scenarioPlayer = sceneReferencer.scenarioPlayer;
