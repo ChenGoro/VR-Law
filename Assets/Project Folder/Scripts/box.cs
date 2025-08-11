@@ -78,7 +78,8 @@ public class Box : MonoBehaviour
 
         if (closeButton != null)
             closeButton.gameObject.SetActive(false);
-
+        TXRDataManager.Instance.LogLineToFile("player clicked close");
+    }
 
 
     }
