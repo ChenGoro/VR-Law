@@ -70,12 +70,18 @@ public class Slider : MonoBehaviour
             Debug.LogError("Slider is not properly configured. Please assign all required references.");
             return;
         }
+
+        SliderCollider sliderCollider = lineCollider.gameObject.GetComponent<SliderCollider>();
+        if (sliderCollider == null)
+        {
+            sliderCollider = lineCollider.gameObject.AddComponent<SliderCollider>();
+        }
+
+        sliderCollider.OnToucherPositionChanged += SetValueFromColliderPosition;
+
         DrawLine();
         UpdateCollider();
-
-
         UpdateStepMarks();
-
         SetValue(CurrentValue);
 
         if (stepMarkParent == null)
@@ -370,33 +376,9 @@ public class Slider : MonoBehaviour
         if (maxPointText != null)
             maxPointText.text = MaxValue.ToString(valueFormat) + valueUnitSymbol;
     }
-    #endregion 
+    #endregion
 
-
-    public void SetValue(float newValue)
-    {
-        ApplyValue(newValue);
-    }
-
-    private float SnapToStep(float v)
-    {
-        if (MaxValue <= MinValue)
-            return MinValue;
-
-        v = Mathf.Clamp(v, MinValue, MaxValue);
-
-        if (AllowContinuousValues || NumOfSteps <= 0)
-            return v;
-
-        // number of intervals, so each step is this size:
-        float stepSize = (MaxValue - MinValue) / NumOfSteps;
-
-        // find nearest step index
-        int stepIndex = Mathf.RoundToInt((v - MinValue) / stepSize);
-
-        return MinValue + stepIndex * stepSize;
-    }
-
+    #region Apply Value
 
     private void ApplyFromNormalized(float t01)
     {
@@ -425,4 +407,62 @@ public class Slider : MonoBehaviour
         UpdateValueText();
     }
 
+    private void SetValueFromColliderPosition(Vector3 worldPos)
+    {
+        Debug.Log($"[Slider] SetValueFromColliderPosition: {worldPos}");
+        Vector3 closestPoint = GetClosestPointOnSegment(worldPos);
+        float t = GetTOnSegment(closestPoint);
+        ApplyFromNormalized(t);
+    }
+    #endregion
+
+    #region Public API
+    public void SetValue(float newValue)
+    {
+        ApplyValue(newValue);
+    }
+
+    #endregion
+
+    #region helpers
+
+    private float SnapToStep(float v)
+    {
+        if (MaxValue <= MinValue)
+            return MinValue;
+
+        v = Mathf.Clamp(v, MinValue, MaxValue);
+
+        if (AllowContinuousValues || NumOfSteps <= 0)
+            return v;
+
+        // number of intervals, so each step is this size:
+        float stepSize = (MaxValue - MinValue) / NumOfSteps;
+
+        // find nearest step index
+        int stepIndex = Mathf.RoundToInt((v - MinValue) / stepSize);
+
+        return MinValue + stepIndex * stepSize;
+    }
+
+    // 0..1 along the segment [minPoint -> maxPoint], clamped
+    private float GetTOnSegment(Vector3 worldPos)
+    {
+        Vector3 a = minPoint.position;
+        Vector3 b = maxPoint.position;
+        Vector3 ab = b - a;
+        float lenSq = ab.sqrMagnitude;
+        if (lenSq < 1e-8f) return 0f; // degenerate segment
+
+        float t = Vector3.Dot(worldPos - a, ab) / lenSq; // projection scalar
+        return Mathf.Clamp01(t);
+    }
+
+    // actual closest point in world space (optional, handy for snapping handle)
+    private Vector3 GetClosestPointOnSegment(Vector3 worldPos)
+    {
+        float t = GetTOnSegment(worldPos);
+        return Vector3.Lerp(minPoint.position, maxPoint.position, t);
+    }
+    #endregion
 }
