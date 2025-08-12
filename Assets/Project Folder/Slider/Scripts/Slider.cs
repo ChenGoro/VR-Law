@@ -10,7 +10,7 @@ using UnityEngine;
 public class Slider : MonoBehaviour
 {
     [Header("Settings")]
-    [Tooltip("number of intervals. minimum 1)")]
+    [Tooltip("number of intervals. minimum 1")]
     [Min(1)]
     public int NumOfSteps = 10;
     public float MinValue = 0f;
@@ -108,16 +108,28 @@ public class Slider : MonoBehaviour
 
     private void OnValidate()
     {
-        ApplyFromNormalized(currentNormalized); // snaps if needed, or stays continuous
+        ApplyFromNormalized(currentNormalized);
 
-        if (minPoint == null || maxPoint == null || lineRenderer == null) return;
         if (stepMarkParent == null) stepMarkParent = transform;
+        if (minPoint == null || maxPoint == null || lineRenderer == null) return;
 
         DrawLine();
         UpdateCollider();
-        RequestRegenerateStepMarks();
         UpdateEndValueTexts();
+
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            ScheduleRegenerateStepMarks();   //  queue, don’t destroy in OnValidate
+            return;
+        }
+#endif
+
+        // Play mode
+        RegenerateStepMarksNow();
     }
+
+
 
     #endregion
 
@@ -132,23 +144,20 @@ public class Slider : MonoBehaviour
 #if UNITY_EDITOR
         if (!Application.isPlaying)
         {
-            if (_pendingEditorRegen) return;
-            _pendingEditorRegen = true;
-
-            EditorApplication.delayCall += () =>
-            {
-                if (this == null) return;            // object might be gone
-                _pendingEditorRegen = false;
-                RegenerateStepMarksNow();            // safe point (not in OnValidate)
-                EditorUtility.SetDirty(this);
-                if (gameObject != null && gameObject.scene.IsValid())
-                    EditorSceneManager.MarkSceneDirty(gameObject.scene);
-            };
+            // Immediate in Edit Mode (no scheduling, no guards)
+            RegenerateStepMarksNow();
             return;
         }
 #endif
         // Play mode: do it immediately (uses Destroy)
         RegenerateStepMarksNow();
+    }
+
+    private bool StepMarksInvalid()
+    {
+        return stepMarks == null
+            || stepMarks.Count != NumOfSteps    // if you want endpoints included use NumOfSteps+1 here
+            || stepMarks.Exists(m => m == null);
     }
 
 
@@ -157,15 +166,22 @@ public class Slider : MonoBehaviour
         if (_isRebuilding) return;
         _isRebuilding = true;
 
-        // Ensure parent exists
         if (stepMarkParent == null) stepMarkParent = transform;
+
+        // If marks are already valid and ShowStepMarks didn't change, skip work
+        // Comment this out if you prefer unconditional rebuilds on every inspector nudge
+        if (ShowStepMarks && !StepMarksInvalid())
+        {
+            _isRebuilding = false;
+            return;
+        }
 
         ClearStepMarksNow();
 
         if (!ShowStepMarks)
         {
             _isRebuilding = false;
-            return; // No step marks to create
+            return; // cleared & done
         }
 
         if (stepMarkPrefab == null || stepMarkParent == null || minPoint == null || maxPoint == null)
@@ -180,25 +196,26 @@ public class Slider : MonoBehaviour
             float t = (MaxValue - MinValue) > 0f ? (stepValue - MinValue) / (MaxValue - MinValue) : 0f;
             Vector3 pos = Vector3.Lerp(minPoint.position, maxPoint.position, t);
 
-            GameObject mark;
+            GameObject inst;
 #if UNITY_EDITOR
             if (!Application.isPlaying)
             {
-                mark = (GameObject)PrefabUtility.InstantiatePrefab(stepMarkPrefab, stepMarkParent);
-                mark.transform.position = pos;
+                inst = (GameObject)PrefabUtility.InstantiatePrefab(stepMarkPrefab, stepMarkParent);
+                inst.transform.position = pos;
             }
             else
 #endif
             {
-                mark = Instantiate(stepMarkPrefab, pos, Quaternion.identity, stepMarkParent);
+                inst = Instantiate(stepMarkPrefab, pos, Quaternion.identity, stepMarkParent);
             }
 
-            mark.name = $"StepMark_{i}";
-            stepMarks.Add(mark);
+            inst.name = $"StepMark_{i}";
+            stepMarks.Add(inst);
         }
 
         _isRebuilding = false;
     }
+
 
     private void ClearStepMarksNow()
     {
@@ -207,19 +224,43 @@ public class Slider : MonoBehaviour
 #if UNITY_EDITOR
         if (!Application.isPlaying)
         {
-            // Edit mode: must be immediate (but NOT from OnValidate)
-            foreach (var go in stepMarks)
-                if (go) DestroyImmediate(go);
+            for (int i = 0; i < stepMarks.Count; i++)
+            {
+                var go = stepMarks[i];
+                if (!go) continue;
+                if (go.scene.IsValid() && !PrefabUtility.IsPartOfPrefabAsset(go))
+                    Undo.DestroyObjectImmediate(go);
+            }
+            stepMarks.RemoveAll(g => g == null || !g || !g.scene.IsValid());
+            return;
         }
-        else
 #endif
-        {
-            // Play mode: normal deferred destroy
-            foreach (var go in stepMarks)
-                if (go) Destroy(go);
-        }
+
+        foreach (var go in stepMarks)
+            if (go) Destroy(go);
         stepMarks.Clear();
     }
+
+#if UNITY_EDITOR
+    private bool _regenQueued = false;
+
+    private void ScheduleRegenerateStepMarks()
+    {
+        if (_regenQueued) return;
+        _regenQueued = true;
+
+        EditorApplication.delayCall += () =>
+        {
+            _regenQueued = false;
+            if (this == null) return;
+
+            RegenerateStepMarksNow();                // safe to DestroyImmediate here
+            EditorUtility.SetDirty(this);
+            if (gameObject && gameObject.scene.IsValid())
+                EditorSceneManager.MarkSceneDirty(gameObject.scene);
+        };
+    }
+#endif
 
     private void OnEndpointsMoved()
     {
