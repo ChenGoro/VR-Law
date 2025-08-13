@@ -5,6 +5,7 @@ using UnityEditor.SceneManagement;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 [ExecuteAlways]
 public class Slider : MonoBehaviour
@@ -29,6 +30,7 @@ public class Slider : MonoBehaviour
     [SerializeField] private bool hideOnAwake = false;
 
     [Header("References")]
+    [SerializeField] private VR_Button confirmButton;
     [SerializeField] private GameObject stepMarkPrefab;
     [SerializeField] private Transform stepMarkParent;
     [SerializeField] private Transform minPoint;
@@ -52,6 +54,8 @@ public class Slider : MonoBehaviour
     private Vector3 _prevMinPos;
     private Vector3 _prevMaxPos;
     private const float _posEpsilonSqr = 1e-8f;
+
+    private UniTaskCompletionSource tcs;
 
     #region Unity LifeCycle
     private void Awake()
@@ -420,6 +424,24 @@ public class Slider : MonoBehaviour
     public void SetValue(float newValue)
     {
         ApplyValue(newValue);
+    }
+
+    public async UniTask<float> WaitForConfirm()
+    {
+        tcs = new UniTaskCompletionSource();
+        await UniTask.Yield();
+        confirmButton.VRButtonPressed.AddListener(OnConfirmPressed);
+
+        await tcs.Task;
+
+        confirmButton.VRButtonPressed.RemoveListener(OnConfirmPressed);
+
+        return CurrentValue;
+    }
+
+    public void OnConfirmPressed()
+    {
+        tcs.TrySetResult();
     }
 
     #endregion

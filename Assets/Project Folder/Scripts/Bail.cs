@@ -1,57 +1,98 @@
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Bail : MonoBehaviour
-    /***
-     * in charge of the bail game component, has the text prompt (textMeshPro) and the choices buttons (binaryChoiceManager)
-     */
+/***
+ * in charge of the bail game component, has the text prompt (textMeshPro) and the choices buttons (binaryChoiceManager)
+ */
 {
-    [SerializeField] private BinaryChoiceManager ChoiceManager;
-    [SerializeField] private TextMeshPro text;
     [SerializeField] private TextMeshPro title;
+    [SerializeField] private VR_Button RORButton;
+    [SerializeField] private VR_Button ROBButton;
+    [SerializeField] private VR_Button JailButton;
+    [SerializeField] private BailAmountChooser bailAmountChooser;
 
-    private bool choice;
+    private BailOption[] bailOptions;
+    private BailOptionType choice;
     private UniTaskCompletionSource tcs;
+
+    private void Start()
+    {
+        bailOptions = GetComponentsInChildren<BailOption>();
+    }
+
 
     public void LoadScenarioAssets(ScenarioData scenarioData)
     {
         string fullName = $"{scenarioData.DefendantFirstName} {scenarioData.DefendantLastName}";
-        title.text = $"Bail decision for {fullName}";
+        // change the options text so that the defandats name appears TODO
     }
 
-    public async UniTask<bool> ShowUntilChoiceMade()
+    public async UniTask<(BailOptionType, float)> ShowUntilChoiceMade()
     {
+
         Show();
-        await UniTask.Delay(1000);
+        bailAmountChooser.Hide();
+        await UniTask.Yield(); // ensure buttons are initialized before awaiting
 
         tcs = new UniTaskCompletionSource();
-        ChoiceManager.ChoiceMade.AddListener(OnPressed);
+        ROBButton.VRButtonPressed.AddListener(ROBwasPresses);
+        RORButton.VRButtonPressed.AddListener(RORwasPressed);
+        JailButton.VRButtonPressed.AddListener(JailWasPressed);
         await tcs.Task;
-        ChoiceManager.ChoiceMade.RemoveListener(OnPressed);
+
+        float bailAmount = -1f;
+
+        if (choice == BailOptionType.ROB)
+        {
+            SetOptionsVisibility(false);
+            bailAmount = await bailAmountChooser.ShowAndWaitForBailAmount();
+        }
 
         Hide();
-        return choice;
+        return (choice, bailAmount);
     }
 
-    public void OnPressed(bool choice)
+    private void ROBwasPresses()
     {
+        choice = BailOptionType.ROB;
         tcs.TrySetResult();
-        this.choice = choice;
     }
+
+    private void RORwasPressed()
+    {
+        choice = BailOptionType.ROR;
+        tcs.TrySetResult();
+    }
+    private void JailWasPressed()
+    {
+        choice = BailOptionType.Jail;
+        tcs.TrySetResult();
+    }
+
 
     public void Show()
     {
-        text.gameObject.SetActive(true);
         title.gameObject.SetActive(true);
-        ChoiceManager.Show();
+        SetOptionsVisibility(true);
+
     }
 
     public void Hide()
     {
-        text.gameObject.SetActive(false);
         title.gameObject.SetActive(false);
-        ChoiceManager.hide();
+        SetOptionsVisibility(false);
+        bailAmountChooser.Hide();
     }
+
+    private void SetOptionsVisibility(bool visible)
+    {
+        foreach (var option in bailOptions)
+        {
+            if (visible) option.Show();
+            else option.Hide();
+        }
+    }
+
 }

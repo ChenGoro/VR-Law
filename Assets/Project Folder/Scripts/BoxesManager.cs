@@ -1,7 +1,7 @@
-using UnityEngine;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
 public class BoxesManager : MonoBehaviour
 {
@@ -16,6 +16,8 @@ public class BoxesManager : MonoBehaviour
     public TextMeshPro AttorneyStatement;
     public SpriteRenderer DefandantPhoto;
     public SpriteRenderer VictimPhoto;
+    public GameObject ContinueInstructions;
+    public int ContinueInstructionsShowTime = 3;
 
     private int viewedCount = 0;
     private UniTaskCompletionSource allBoxesViewedTCS;
@@ -47,6 +49,7 @@ public class BoxesManager : MonoBehaviour
     public async UniTask ShowBoxesAndWaitForAll()
     {
         gameObject.SetActive(true);
+
         viewedCount = 0;
         allBoxesViewedTCS = new UniTaskCompletionSource();
 
@@ -60,10 +63,12 @@ public class BoxesManager : MonoBehaviour
             Debug.Log("inside BoxesManagers ShowBoxesAndWaitForAll after for each");
         }
 
+        ShowContinueInstructionsForSeconds(ContinueInstructionsShowTime).Forget();
+
         await allBoxesViewedTCS.Task;
 
         if (continueButton != null)
-        { 
+        {
             continueButton.gameObject.SetActive(true);
             ContinuePressedTCS = new UniTaskCompletionSource();
             continueButton.VRButtonPressed.AddListener(OnContinuePressed);
@@ -73,7 +78,7 @@ public class BoxesManager : MonoBehaviour
             viewedCount = 0;
         }
     }
-private void OnContinuePressed()
+    private void OnContinuePressed()
     {
         ContinuePressedTCS.TrySetResult();
     }
@@ -82,5 +87,12 @@ private void OnContinuePressed()
         viewedCount++;
         if (viewedCount >= boxes.Count)
             allBoxesViewedTCS.TrySetResult();
+    }
+
+    public async UniTask ShowContinueInstructionsForSeconds(int seconds)
+    {
+        ContinueInstructions.SetActive(true);
+        await UniTask.Delay(seconds * 1000);
+        ContinueInstructions.SetActive(false);
     }
 }

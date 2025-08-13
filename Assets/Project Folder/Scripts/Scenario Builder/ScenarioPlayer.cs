@@ -23,7 +23,7 @@ public class ScenarioPlayer : MonoBehaviour
     public async UniTask PlayScenario(ScenarioData scenarioData)
     {
         await PlayLegalScenario(scenarioData);
-        await PlayBoxesInstructions(scenarioData);
+        //await PlayBoxesInstructions(scenarioData);
         await PlayBoxes(scenarioData);
         await PlayDesicion(scenarioData);
         await PlayEndScenarioInstructions(scenarioData);
@@ -53,8 +53,10 @@ public class ScenarioPlayer : MonoBehaviour
         {
             case ScenarioType.Bail:
                 bailDecision.LoadScenarioAssets(scenarioData);
-                bool bailChoice = await bailDecision.ShowUntilChoiceMade();
-                TXRDataManager.Instance.LogLineToFile($"{scenarioData.ScenarioDescription}: bail choice = {bailChoice}");
+                BailOptionType bailChoice;
+                float bailAmount;
+                (bailChoice, bailAmount) = await bailDecision.ShowUntilChoiceMade();
+                TXRDataManager.Instance.LogLineToFile($"{scenarioData.ScenarioDescription}: bail choice = {bailChoice}, bail amount = {bailAmount}");
                 break;
 
             case ScenarioType.Sentencing:
@@ -65,7 +67,7 @@ public class ScenarioPlayer : MonoBehaviour
 
     private async UniTask PlayEndScenarioInstructions(ScenarioData scenarioData)
     {
-        endSenarioInstructions.LoadScenarioAssets(scenarioData);
+
         await endSenarioInstructions.ShowUntilConfirm();
     }
 }

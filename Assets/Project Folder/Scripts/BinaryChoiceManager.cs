@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class BinaryChoiceManager : MonoBehaviour
-    /***
-     * in charge of the 2 choice buttons game object
-     */
+/***
+ * in charge of the 2 choice buttons game object
+ */
 {
 
     public VR_Button YesButton;
@@ -20,26 +20,21 @@ public class BinaryChoiceManager : MonoBehaviour
     }
 
 
-
     private void NoWasPressed()
     {
         Choice = false;
         ChoiceMade.Invoke(Choice);
     }
-    void Start()
+    private void Start()
     {
         YesButton.VRButtonPressed.AddListener(YesWasPressed);
-
         NoButton.VRButtonPressed.AddListener(NoWasPressed);
-
     }
 
     public void Show()
     {
         YesButton.gameObject.SetActive(true);
         NoButton.gameObject.SetActive(true);
-
-
     }
 
 
@@ -47,8 +42,6 @@ public class BinaryChoiceManager : MonoBehaviour
     {
         YesButton.gameObject.SetActive(false);
         NoButton.gameObject.SetActive(false);
-
-
     }
 
 }
