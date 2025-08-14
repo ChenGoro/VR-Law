@@ -803,6 +803,53 @@ MonoBehaviour:
   boxes: {fileID: 2064571856}
   endSenarioInstructions: {fileID: 1281544652}
   bailDecision: {fileID: 614350571}
+--- !u!1 &1115721278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1115721280}
+  - component: {fileID: 1115721279}
+  m_Layer: 0
+  m_Name: TTS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1115721279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115721278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 259eec5fd0718564f92fc5ab6e62a1de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  voiceId: en_US-joe-medium
+  text: Hello from Piper offline TTS on Quest Pro.
+--- !u!4 &1115721280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115721278}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.09230885, y: 1.5146171, z: 0.5319875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1281544650
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2034,3 +2081,4 @@ SceneRoots:
   - {fileID: 1930651605286045249}
   - {fileID: 671071010}
   - {fileID: 8560498557730323968}
+  - {fileID: 1115721280}

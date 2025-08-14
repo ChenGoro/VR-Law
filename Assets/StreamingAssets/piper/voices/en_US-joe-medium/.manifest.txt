@@ -1,0 +1,4 @@
+en_US-joe-medium.onnx
+en_US-joe-medium.onnx.json
+en_US-joe-medium.onnx.json.meta
+en_US-joe-medium.onnx.meta
