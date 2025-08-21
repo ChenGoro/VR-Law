@@ -352,7 +352,7 @@ PrefabInstance:
     - target: {fileID: 4892174798880856042, guid: 5ebad9bfbcb2117469c3531381ad3194,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5768968664247805315, guid: 5ebad9bfbcb2117469c3531381ad3194,
         type: 3}
@@ -475,7 +475,7 @@ PrefabInstance:
     - target: {fileID: 3065385290536760724, guid: 64dc0d379a4844145b03ee760c8fc855,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3207628661063503339, guid: 64dc0d379a4844145b03ee760c8fc855,
         type: 3}
@@ -819,7 +819,7 @@ PrefabInstance:
     - target: {fileID: 1235356474867818515, guid: d6b78d3f9af5d4f4b9b235c6d448e159,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2538997392434500591, guid: d6b78d3f9af5d4f4b9b235c6d448e159,
         type: 3}
@@ -1392,6 +1392,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BoxesManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1741889627329219797, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2142603052103866648, guid: d7c193c276ca653428c77dc001a52ada,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -1695,10 +1700,10 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 1343708944}
   - {fileID: 5928355734707538071}
   - {fileID: 3002418091857030092}
   - {fileID: 614350572}
-  - {fileID: 1343708944}
   - {fileID: 2064571855}
   - {fileID: 1281544651}
   - {fileID: 604638946}
@@ -1963,7 +1968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5928355734707538071
 Transform:
   m_ObjectHideFlags: 0
