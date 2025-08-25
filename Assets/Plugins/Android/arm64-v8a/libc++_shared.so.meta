@@ -36,7 +36,7 @@ PluginImporter:
     Linux64:
       enabled: 0
       settings:
-        CPU: x86_64
+        CPU: None
     OSXUniversal:
       enabled: 0
       settings:
@@ -44,7 +44,7 @@ PluginImporter:
     Win:
       enabled: 0
       settings:
-        CPU: x86
+        CPU: None
     Win64:
       enabled: 0
       settings:
