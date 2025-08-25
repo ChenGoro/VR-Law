@@ -6,6 +6,8 @@ public class BailAmountChooser : MonoBehaviour
 {
     [SerializeField] private Slider slider;
     [SerializeField] private TextMeshPro Tiltle;
+    private float bailAmount;
+    public float BailAmount { get { return bailAmount; } }
 
     public async UniTask<float> ShowAndWaitForBailAmount()
     {
@@ -13,6 +15,11 @@ public class BailAmountChooser : MonoBehaviour
         float bailAmount = await slider.WaitForConfirm();
         Hide();
         return bailAmount;
+    }
+
+    public async UniTask CancelWait()
+    {
+        await slider.CancelWait();
     }
 
 

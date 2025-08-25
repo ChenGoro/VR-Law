@@ -7,7 +7,7 @@ public class Instructions : MonoBehaviour
 {
     [SerializeField] private VR_Button confirmButton;
     [SerializeField] private TextMeshPro instructionText;
-    [SerializeField] private Plane backface;
+
 
     public void LoadScenarioAssets(ScenarioData scenarioData)
     {

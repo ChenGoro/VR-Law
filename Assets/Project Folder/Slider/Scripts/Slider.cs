@@ -333,36 +333,48 @@ public class Slider : MonoBehaviour
 
     public void UpdateCollider()
     {
-        if (lineCollider == null || minPoint == null || maxPoint == null)
-        {
-            Debug.LogError("Collider or points not assigned.");
+        if (lineCollider == null || minPoint == null || maxPoint == null || lineRenderer == null)
             return;
-        }
 
-        // Work in world space
+        // World-space endpoints
         Vector3 start = minPoint.position;
         Vector3 end = maxPoint.position;
-        Vector3 mid = (start + end) / 2f;
-        Vector3 dir = (end - start).normalized;
-        float length = Vector3.Distance(start, end);
+        Vector3 dir = end - start;
+        float lengthWorld = dir.magnitude;
+        if (lengthWorld < 1e-6f) return;
 
-        // Ensure collider is a child of lineRenderer transform
-        if (lineCollider.transform.parent != lineRenderer.transform)
-        {
-            lineCollider.transform.SetParent(lineRenderer.transform, false);
-        }
+        // Ensure collider is under the lineRenderer (axes match)
+        Transform t = lineCollider.transform;
+        if (t.parent != lineRenderer.transform)
+            t.SetParent(lineRenderer.transform, false);
 
-        // Reset local scale in case it was skewed before
-        lineCollider.transform.localScale = Vector3.one;
+        // Reset local scale (only parent chain scale should apply)
+        t.localScale = Vector3.one;
 
-        // Set collider world position/rotation, but keep relative to lineRenderer
-        lineCollider.transform.position = mid;
-        if (dir != Vector3.zero)
-            lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, dir);
+        // Place and orient the collider in world space
+        t.position = (start + end) * 0.5f;
+        t.rotation = Quaternion.FromToRotation(Vector3.right, dir.normalized);
 
-        // Size: long axis = X, thin height/depth from inspector
-        lineCollider.size = new Vector3(length, colliderHeight, colliderDepth);
+        // Effective world scale per local axis (handles rotated and non-uniformly scaled parents)
+        float sx = t.TransformVector(Vector3.right).magnitude;   // world units per 1 local X
+        float sy = t.TransformVector(Vector3.up).magnitude;      // world units per 1 local Y
+        float sz = t.TransformVector(Vector3.forward).magnitude; // world units per 1 local Z
+
+        // Desired world thicknesses
+        float heightWorld = colliderHeight;
+        float depthWorld = colliderDepth;
+
+        // Convert world sizes to local sizes for BoxCollider.size
+        float localLen = lengthWorld / Mathf.Max(sx, 1e-6f);
+        float localHeight = heightWorld / Mathf.Max(sy, 1e-6f);
+        float localDepth = depthWorld / Mathf.Max(sz, 1e-6f);
+
+        // Apply
+        lineCollider.center = Vector3.zero;
+        lineCollider.size = new Vector3(localLen, localHeight, localDepth);
     }
+
+
 
 
     private void UpdateValueMark()
@@ -442,6 +454,13 @@ public class Slider : MonoBehaviour
     public void OnConfirmPressed()
     {
         tcs.TrySetResult();
+    }
+
+    public async UniTask CancelWait()
+    {
+        await UniTask.Yield();
+        if (tcs != null)
+            tcs.TrySetCanceled();
     }
 
     #endregion

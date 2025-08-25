@@ -31,24 +31,31 @@ public class Bail : MonoBehaviour
 
     public async UniTask<(BailOptionType, float)> ShowUntilChoiceMade()
     {
-
+        float bailAmount = -1f;
         Show();
-        bailAmountChooser.Hide();
+        //bailAmountChooser.Hide(); // old flow: bail amount chooser only shows if ROB is chosen 
         await UniTask.Yield(); // ensure buttons are initialized before awaiting
 
         tcs = new UniTaskCompletionSource();
+        bailAmountChooser.ShowAndWaitForBailAmount().Forget();
         ROBButton.VRButtonPressed.AddListener(ROBwasPresses);
         RORButton.VRButtonPressed.AddListener(RORwasPressed);
         JailButton.VRButtonPressed.AddListener(JailWasPressed);
         await tcs.Task;
 
-        float bailAmount = -1f;
-
         if (choice == BailOptionType.ROB)
         {
-            SetOptionsVisibility(false);
-            bailAmount = await bailAmountChooser.ShowAndWaitForBailAmount();
+            bailAmount = bailAmountChooser.BailAmount;
+
         }
+
+        await bailAmountChooser.CancelWait();
+
+        //if (choice == BailOptionType.ROB) // old flow: bail amount chooser only shows if ROB is chosen
+        //{
+        //    SetOptionsVisibility(false);
+        //    bailAmount = await bailAmountChooser.ShowAndWaitForBailAmount();
+        //}
 
         Hide();
         return (choice, bailAmount);
