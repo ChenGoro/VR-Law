@@ -6,6 +6,7 @@ public class BailOption : MonoBehaviour
     public TextMeshPro title;
     public VR_Button button;
     public BailOptionType bailOptionType;
+    public GameObject Backface;
 
 
     public void Show()
@@ -13,6 +14,7 @@ public class BailOption : MonoBehaviour
         text.gameObject.SetActive(true);
         title.gameObject.SetActive(true);
         button.gameObject.SetActive(true);
+        Backface.SetActive(true);
 
     }
 
@@ -21,6 +23,7 @@ public class BailOption : MonoBehaviour
         text.gameObject.SetActive(false);
         title.gameObject.SetActive(false);
         button.gameObject.SetActive(false);
+        Backface.SetActive(false);
     }
 }
 
