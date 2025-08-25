@@ -17,9 +17,10 @@ public class Bail : MonoBehaviour
     private BailOptionType choice;
     private UniTaskCompletionSource tcs;
 
-    private void Start()
+    private void Awake()
     {
         bailOptions = GetComponentsInChildren<BailOption>();
+        Debug.Log($"Bail: found {bailOptions.Length} bail options");
     }
 
 
@@ -95,8 +96,9 @@ public class Bail : MonoBehaviour
 
     private void SetOptionsVisibility(bool visible)
     {
-        foreach (var option in bailOptions)
+        foreach (BailOption option in bailOptions)
         {
+            Debug.Log($"Bail: setting visibility of {option.bailOptionType} to {visible}");
             if (visible) option.Show();
             else option.Hide();
         }
