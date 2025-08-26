@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using System;
+
 
 [ExecuteAlways]
 public class Slider : MonoBehaviour
@@ -56,6 +58,8 @@ public class Slider : MonoBehaviour
     private const float _posEpsilonSqr = 1e-8f;
 
     private UniTaskCompletionSource tcs;
+
+    public event Action sliderWasTouched;
 
     #region Unity LifeCycle
     private void Awake()
@@ -429,6 +433,7 @@ public class Slider : MonoBehaviour
         Vector3 closestPoint = GetClosestPointOnSegment(worldPos);
         float t = GetTOnSegment(closestPoint);
         ApplyFromNormalized(t);
+        sliderWasTouched?.Invoke();
     }
     #endregion
 

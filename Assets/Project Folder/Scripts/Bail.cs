@@ -37,8 +37,13 @@ public class Bail : MonoBehaviour
         //bailAmountChooser.Hide(); // old flow: bail amount chooser only shows if ROB is chosen 
         await UniTask.Yield(); // ensure buttons are initialized before awaiting
 
-        tcs = new UniTaskCompletionSource();
+        // initially disable ROB button until bail amount is touched
+        ROBButton.SetButtonEnabled(false);
+        bailAmountChooser.sliderWasTouched += EnableROBbutton;
         bailAmountChooser.ShowAndWaitForBailAmount().Forget();
+
+        // wait for one of the buttons to be pressed
+        tcs = new UniTaskCompletionSource();
         ROBButton.VRButtonPressed.AddListener(ROBwasPresses);
         RORButton.VRButtonPressed.AddListener(RORwasPressed);
         JailButton.VRButtonPressed.AddListener(JailWasPressed);
@@ -102,6 +107,11 @@ public class Bail : MonoBehaviour
             if (visible) option.Show();
             else option.Hide();
         }
+    }
+
+    private void EnableROBbutton()
+    {
+        ROBButton.SetButtonEnabled(true);
     }
 
 }

@@ -367,6 +367,8 @@ MonoBehaviour:
   VRButtonPressed:
     m_PersistentCalls:
       m_Calls: []
+  disabledMaterial: {fileID: 2100000, guid: 4d0a7b7f67e94f5469ee6846e07e39a5, type: 2}
+  buttonGraphics: {fileID: 7551103224321484188}
 --- !u!1001 &9154548938955536664
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -460,6 +462,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 316a7ba7e7090b443bfcdc6b36217cac, type: 3}
+--- !u!23 &7551103224321484188 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 316a7ba7e7090b443bfcdc6b36217cac,
+    type: 3}
+  m_PrefabInstance: {fileID: 9154548938955536664}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8683437871230803699 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 316a7ba7e7090b443bfcdc6b36217cac,
