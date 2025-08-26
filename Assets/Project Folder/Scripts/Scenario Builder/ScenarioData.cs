@@ -63,48 +63,52 @@ public enum CrimeType
 
 
 
-    public class ScenarioTemplate
-    /*
-     * sub container for the scenario specific data. while photos and names change, scenario tenplate data stays the same for all runs
-     */
+public class ScenarioTemplate
+/*
+ * sub container for the scenario specific data. while photos and names change, scenario tenplate data stays the same for all runs
+ */
+{
+    public string Description { get; private set; }
+    public ScenarioType ScenarioType { get; private set; }
+    public CrimeType CrimeType { get; private set; }
+    public string ProsecutorStatement { get; private set; }
+    public string AttorneyStatement { get; private set; }
+
+    public ScenarioTemplate(
+        string description,
+        ScenarioType scenarioType,
+        CrimeType crimeType,
+        string prosecutorStatement,
+        string attorneyStatement)
     {
-        public string Description { get; private set; }
-        public ScenarioType ScenarioType { get; private set; }
-        public CrimeType CrimeType { get; private set; }
-        public string ProsecutorStatement { get; private set; }
-        public string AttorneyStatement { get; private set; }
+        Description = description;
+        ScenarioType = scenarioType;
+        CrimeType = crimeType;
+        ProsecutorStatement = prosecutorStatement;
+        AttorneyStatement = attorneyStatement;
+    }
 
-        public ScenarioTemplate(
-            string description,
-            ScenarioType scenarioType,
-            CrimeType crimeType,
-            string prosecutorStatement,
-            string attorneyStatement)
-        {
-            Description = description;
-            ScenarioType = scenarioType;
-            CrimeType = crimeType;
-            ProsecutorStatement = prosecutorStatement;
-            AttorneyStatement = attorneyStatement;
-        }
-
-        public void AddNamesToStatements(string defandantFirstName, string defandantLastName, string victimFirstName, string victimLastName)
-        {
-            Dictionary<string, string> namesCodes = new Dictionary<string, string>
+    public void AddNamesToStatements(string defandantFirstName, string defandantLastName, string victimFirstName, string victimLastName)
+    {
+        Dictionary<string, string> namesCodes = new Dictionary<string, string>
         {
             { "*defandantFirstName*", defandantFirstName },
             { "*defandantLastName*", defandantLastName },
             { "*victimFirstName*", victimFirstName },
-            { "*victimLastName*", victimLastName }
+            { "*victimLastName*", victimLastName },
+
+            { "John", defandantFirstName },
+            { "Doe", defandantLastName },
         };
 
-            foreach (var pair in namesCodes)
-            {
-                ProsecutorStatement = ProsecutorStatement.Replace(pair.Key, pair.Value);
-                AttorneyStatement = AttorneyStatement.Replace(pair.Key, pair.Value);
-            }
+        foreach (var pair in namesCodes)
+        {
+            ProsecutorStatement = ProsecutorStatement.Replace(pair.Key, pair.Value);
+            AttorneyStatement = AttorneyStatement.Replace(pair.Key, pair.Value);
+            Description = Description.Replace(pair.Key, pair.Value);
         }
     }
+}
 
 
 
