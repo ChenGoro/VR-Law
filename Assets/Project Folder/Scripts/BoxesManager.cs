@@ -22,6 +22,7 @@ public class BoxesManager : MonoBehaviour
     private int viewedCount = 0;
     private UniTaskCompletionSource allBoxesViewedTCS;
     private UniTaskCompletionSource ContinuePressedTCS;
+
     private void Start()
     {
         continueButton.gameObject.SetActive(false);
@@ -34,6 +35,27 @@ public class BoxesManager : MonoBehaviour
         AttorneyStatement.text = scenario.AttorneyStatement;
         DefandantPhoto.sprite = scenario.DefendantPhoto;
         VictimPhoto.sprite = scenario.VictimPhoto;
+
+        // change order of boxes based on layout order
+        // order is set by the order of children in the hirarchy
+        SetBoxesOrder(scenario.LayoutOrder);
+
+    }
+
+    private void SetBoxesOrder(int[] layoutOrder)
+    {
+        HorizontalObjectLayoutGroup layoutGroup = GetComponent<HorizontalObjectLayoutGroup>();
+        if (layoutGroup == null)
+        {
+            Debug.LogError("BoxesManager: No HorizontalObjectLayoutGroup component found on the GameObject. cant update boxes order");
+        }
+        for (int i = 0; i < boxes.Count; i++)
+        {
+            int layoutIndex = layoutOrder[i];
+            Box box = boxes[layoutIndex];
+            box.transform.SetSiblingIndex(i);
+        }
+        layoutGroup.UpdateLayout();
     }
 
     public void Hide()
