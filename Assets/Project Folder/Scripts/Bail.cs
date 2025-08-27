@@ -17,6 +17,10 @@ public class Bail : MonoBehaviour
     private BailOptionType choice;
     private UniTaskCompletionSource tcs;
 
+    private float timeShowed;
+    private float timeChosen;
+
+
     private void Awake()
     {
         bailOptions = GetComponentsInChildren<BailOption>();
@@ -34,6 +38,7 @@ public class Bail : MonoBehaviour
     {
         float bailAmount = -1f;
         Show();
+        timeShowed = Time.time;
         //bailAmountChooser.Hide(); // old flow: bail amount chooser only shows if ROB is chosen 
         await UniTask.Yield(); // ensure buttons are initialized before awaiting
 
@@ -49,11 +54,16 @@ public class Bail : MonoBehaviour
         JailButton.VRButtonPressed.AddListener(JailWasPressed);
         await tcs.Task;
 
+        TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Confirmed");
+
+        timeChosen = Time.time;
+
         if (choice == BailOptionType.ROB)
         {
             bailAmount = bailAmountChooser.BailAmount;
-
         }
+
+        TXRDataManager.Instance.ReportDecision(MainExperiment.Instance.ScenarioIndex, "Bail", choice.ToString(), bailAmount, -1, timeChosen - timeShowed);
 
         await bailAmountChooser.CancelWait();
 
@@ -90,6 +100,7 @@ public class Bail : MonoBehaviour
         title.gameObject.SetActive(true);
         SetOptionsVisibility(true);
 
+        TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Shown");
     }
 
     public void Hide()
@@ -97,6 +108,8 @@ public class Bail : MonoBehaviour
         title.gameObject.SetActive(false);
         SetOptionsVisibility(false);
         bailAmountChooser.Hide();
+
+        TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Hidden");
     }
 
     private void SetOptionsVisibility(bool visible)

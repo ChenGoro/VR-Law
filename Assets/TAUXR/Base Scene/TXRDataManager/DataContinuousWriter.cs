@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -6,7 +5,7 @@ using UnityEngine;
 
 public class DataContinuousWriter : MonoBehaviour
 {
-    List<Transform> transformsToRecord;
+    private List<Transform> transformsToRecord;
     public float logFrequency = 0f; // Log frequency in seconds. 0 for logging every frame
     public string fileName = "ContinuousData"; // The name of the file to write to
 
@@ -15,7 +14,7 @@ public class DataContinuousWriter : MonoBehaviour
     public Transform RightHand;
     public Transform LeftHand;
 
-    bool IsEyeTrackingEnabled;
+    private bool IsEyeTrackingEnabled;
     public Transform RightEye;
     public Transform LeftEye;
 
@@ -31,10 +30,13 @@ public class DataContinuousWriter : MonoBehaviour
     private StringBuilder rowBuilder = new StringBuilder();
 
     private TXRPlayer TAUXRPlayer;
+    private string UniqueParticipantId;
 
     public void Init(bool ShouldRecordEyeTracking)
     {
-        IsEyeTrackingEnabled= ShouldRecordEyeTracking;
+        UniqueParticipantId = TXRDataManager.UniqueParticipantId;
+
+        IsEyeTrackingEnabled = ShouldRecordEyeTracking;
 
         TAUXRPlayer = TXRPlayer.Instance;
 
@@ -51,7 +53,7 @@ public class DataContinuousWriter : MonoBehaviour
         AddAllTransformsToList();
 
         //setup file
-        filePath = Path.Combine(Application.persistentDataPath, $"{fileName}_{TAUXRUtilities.GetFormattedDateTime(true)}.csv");
+        filePath = Path.Combine(Application.persistentDataPath, UniqueParticipantId + "_" + $"{fileName}_{TAUXRUtilities.GetFormattedDateTime(true)}.csv");
         writer = new StreamWriter(filePath);
 
         WriteColumnNames();

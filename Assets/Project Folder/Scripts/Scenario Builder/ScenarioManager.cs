@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ScenarioManager : MonoBehaviour
-    /*
-     * in charge of taking the templates from the scenariolibrary, adding them with random photos and names and organizing the scenarioData objects
-     * with all the data neccary for a round.
-     * iterable class for looping over the full scenarios
-     */
+/*
+ * in charge of taking the templates from the scenariolibrary, adding them with random photos and names and organizing the scenarioData objects
+ * with all the data neccary for a round.
+ * iterable class for looping over the full scenarios
+ */
 {
     public ScenarioLibrary ScenarioLibrary;
     public PhotoManager PhotoManager;
@@ -56,10 +56,10 @@ public class ScenarioManager : MonoBehaviour
             ScenarioData scenario = new ScenarioData(
                 template,
                 layoutOrder,
-                defendant.Sprite,
+                defendant,
                 defFirst,
                 defLast,
-                victim.Sprite,
+                victim,
                 vicFirst,
                 vicLast
             );
@@ -127,8 +127,8 @@ public class ScenarioManager : MonoBehaviour
             Debug.Log($"Description: {scenario.ScenarioDescription}");
             Debug.Log($"Defendant: {scenario.DefendantFirstName} {scenario.DefendantLastName}");
             Debug.Log($"Victim: {scenario.VictimFirstName} {scenario.VictimLastName}");
-            Debug.Log($"Defendant Photo: {scenario.DefendantPhoto.name}");
-            Debug.Log($"Victim Photo: {scenario.VictimPhoto.name}");
+            Debug.Log($"Defendant Photo: {scenario.DefendantPhoto.Sprite.name}");
+            Debug.Log($"Victim Photo: {scenario.VictimPhoto.Sprite.name}");
             Debug.Log($"Layout Order: {string.Join(", ", scenario.LayoutOrder)}");
         }
         else

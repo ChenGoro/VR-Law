@@ -33,8 +33,8 @@ public class BoxesManager : MonoBehaviour
     {
         ProsecutorStatement.text = scenario.ProcecutorStatement;
         AttorneyStatement.text = scenario.AttorneyStatement;
-        DefandantPhoto.sprite = scenario.DefendantPhoto;
-        VictimPhoto.sprite = scenario.VictimPhoto;
+        DefandantPhoto.sprite = scenario.DefendantPhoto.Sprite;
+        VictimPhoto.sprite = scenario.VictimPhoto.Sprite;
 
         // change order of boxes based on layout order
         // order is set by the order of children in the hirarchy
@@ -66,11 +66,15 @@ public class BoxesManager : MonoBehaviour
 
         if (continueButton != null)
             continueButton.gameObject.SetActive(false);
+
+        TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Hidden");
     }
 
     public async UniTask ShowBoxesAndWaitForAll()
     {
         gameObject.SetActive(true);
+
+        TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Shown");
 
         viewedCount = 0;
         allBoxesViewedTCS = new UniTaskCompletionSource();
@@ -103,6 +107,7 @@ public class BoxesManager : MonoBehaviour
     private void OnContinuePressed()
     {
         ContinuePressedTCS.TrySetResult();
+        TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Confirmed");
     }
     private void OnBoxViewed()
     {

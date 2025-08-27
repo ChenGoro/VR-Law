@@ -1,5 +1,5 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class Box : MonoBehaviour
 {
@@ -8,36 +8,50 @@ public class Box : MonoBehaviour
     public GameObject content;
     public VR_Button closeButton;
 
+    public TextMeshPro titleText;
+
     private bool wasOpened = false;
     private System.Action onBoxViewed;
+    private TXRDataManager dataManager;
+    private int layoutOrder = -1;
 
     private void Awake()
     {
-        content.SetActive(false);
+        CheckInspectorReferences();
 
-        if (closeButton != null)
-            closeButton.gameObject.SetActive(false);
+        content.SetActive(false);
+        closeButton.gameObject.SetActive(false);
+    }
+
+    private void CheckInspectorReferences()
+    {
+        if (boxMesh == null)
+            Debug.LogError($"{name}: boxMesh reference is missing in the inspector.");
+        if (title == null)
+            Debug.LogError($"{name}: title reference is missing in the inspector.");
+        if (content == null)
+            Debug.LogError($"{name}: content reference is missing in the inspector.");
+        if (titleText == null)
+            Debug.LogError($"{name}: titleText reference is missing in the inspector.");
     }
 
     public void Init(System.Action onViewedCallback)
     {
+        dataManager = TXRDataManager.Instance;
         onBoxViewed = onViewedCallback;
         wasOpened = false;
         boxMesh.SetActive(true);
         title.SetActive(true);
         content.SetActive(false);
-        Debug.Log("inside box init before if");
+
         if (closeButton != null)
         {
             closeButton.gameObject.SetActive(false);
             closeButton.VRButtonPressed.RemoveAllListeners();
             closeButton.VRButtonPressed.AddListener(HideContent);
-
-
-            Debug.Log("inside box init after if");
-
-
         }
+        // layout order is the index of the box among its siblings
+        layoutOrder = transform.GetSiblingIndex();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,6 +72,7 @@ public class Box : MonoBehaviour
     private void ShowContent()
     {
         Debug.Log($"{name}: Showing content...");
+
         content.SetActive(true);
 
         if (closeButton != null)
@@ -66,7 +81,7 @@ public class Box : MonoBehaviour
         if (!wasOpened)
         {
             wasOpened = true;
-            TXRDataManager.Instance.LogLineToFile($"player opened box. title: {title}, content: {content}");
+            dataManager.ReportBoxEvent(MainExperiment.Instance.ScenarioIndex, titleText.text, layoutOrder, "opened");
             onBoxViewed?.Invoke();
         }
     }
@@ -78,9 +93,7 @@ public class Box : MonoBehaviour
 
         if (closeButton != null)
             closeButton.gameObject.SetActive(false);
-        TXRDataManager.Instance.LogLineToFile("player clicked close");
+        dataManager.ReportBoxEvent(MainExperiment.Instance.ScenarioIndex, titleText.text, layoutOrder, "closed");
     }
 
-
-    
 }

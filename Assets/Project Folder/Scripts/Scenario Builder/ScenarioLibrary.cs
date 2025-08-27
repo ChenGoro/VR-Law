@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using System.Text.RegularExpressions;
-using System.Linq;
-using System;
+
 
 public class ScenarioLibrary : MonoBehaviour
 {
@@ -36,6 +37,10 @@ public class ScenarioLibrary : MonoBehaviour
             return templates;
         }
 
+#if !UNITY_EDITOR
+        SaveCsvCopyToPersistentData(csvData, resourcePath); // Save a copy for Analytics, only in builds
+#endif
+
         string[] lines = csvData.text.Split(new[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
 
         // Skip header
@@ -62,7 +67,7 @@ public class ScenarioLibrary : MonoBehaviour
                 string prosecutor = fields[3];
                 string attorney = fields[4];
 
-                templates.Add(new ScenarioTemplate(desc, type, crime, prosecutor, attorney));
+                templates.Add(new ScenarioTemplate(desc, type, crime, prosecutor, attorney, i));
             }
             catch (System.Exception ex)
             {
@@ -73,6 +78,32 @@ public class ScenarioLibrary : MonoBehaviour
 
         return templates;
     }
+
+    private void SaveCsvCopyToPersistentData(TextAsset csvData, string resourcePath)
+    {
+        try
+        {
+            // Use the last segment of the Resources path as the "original name"
+            // e.g., "configs/scenarios" -> "scenarios"
+            string originalName = Path.GetFileName(resourcePath);
+
+            // Unique run id from your TXRDataManager
+            string uid = TXRDataManager.UniqueParticipantId;
+
+            string fileName = $"{uid}_ScenariosCSV_{originalName}.csv";
+            string outPath = Path.Combine(Application.persistentDataPath, fileName);
+
+            // Write exact bytes to preserve encoding exactly as in the asset
+            File.WriteAllBytes(outPath, csvData.bytes);
+
+            Debug.Log($"[ScenarioLibrary] Saved CSV copy to: {outPath}");
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"[ScenarioLibrary] Failed to save CSV copy: {ex.Message}");
+        }
+    }
+
 
     // Handles commas inside quotes
     private string[] SplitCSVLine(string line)

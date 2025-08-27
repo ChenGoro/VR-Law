@@ -1,7 +1,7 @@
-using UnityEngine;
 using Cysharp.Threading.Tasks;
-using UnityEngine.Events;
 using TMPro;
+using UnityEngine;
+using UnityEngine.Events;
 
 public class LegalScenario : MonoBehaviour
 {
@@ -16,6 +16,8 @@ public class LegalScenario : MonoBehaviour
     public async UniTask ShowUntilConfirm()
     {
         gameObject.SetActive(true);
+        TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Shown");
+
         await UniTask.Delay(1000);
 
         var tcs = new UniTaskCompletionSource();
@@ -23,9 +25,11 @@ public class LegalScenario : MonoBehaviour
 
         confirmButton.VRButtonPressed.AddListener(onPressed);
         await tcs.Task;
+        TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Confirmed");
         confirmButton.VRButtonPressed.RemoveListener(onPressed);
 
         gameObject.SetActive(false);
+        TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Hidden");
     }
 
     public void Hide() => gameObject.SetActive(false);

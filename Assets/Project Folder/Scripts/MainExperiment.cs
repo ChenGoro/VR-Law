@@ -1,15 +1,18 @@
-using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.Events;
-using Oculus.Interaction.Samples;
 
-public class MainExperiment : MonoBehaviour
+public class MainExperiment : TXRSingleton<MainExperiment>
 {
     /// <summary>
     /// main experiment flow runner. it uses scenario manager to load the scenarios, and scenarioplayer to play each scenario.
     /// runs the general instruction for the begiining of the experiment.
     /// </summary>
-    SceneReferencer sceneReferencer;
+    private SceneReferencer sceneReferencer;
+
+
+    private int scenarioIndex = 0;
+    public int ScenarioIndex => scenarioIndex;
+
     private async void Start()
     {
         Init();
@@ -20,15 +23,16 @@ public class MainExperiment : MonoBehaviour
 
         ScenarioManager scenarioManager = sceneReferencer.scenarioManager;
         ScenarioPlayer scenarioPlayer = sceneReferencer.scenarioPlayer;
-        
-        
-        
+
         while (scenarioManager.HasNextScenario())
         {
             ScenarioData currentScenario = scenarioManager.GetNextScenario();
+
+            scenarioIndex = currentScenario.ScenarioIndex;
+            TXRDataManager.Instance.ReportScenarioInfo(currentScenario);
+
             await scenarioPlayer.PlayScenario(currentScenario);
         }
-        
 
     }
 

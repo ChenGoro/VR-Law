@@ -25,6 +25,8 @@ public class Instructions : MonoBehaviour
 
         confirmButton.VRButtonPressed.AddListener(onPressed);
         await tcs.Task;
+        TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Confirmed");
+
         confirmButton.VRButtonPressed.RemoveListener(onPressed);
 
         Hide();
@@ -34,11 +36,15 @@ public class Instructions : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
             transform.GetChild(i).gameObject.SetActive(true);
+
+        TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Shown");
     }
 
     public void Hide()
     {
         for (int i = 0; i < transform.childCount; i++)
             transform.GetChild(i).gameObject.SetActive(false);
+
+        TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Hidden");
     }
 }

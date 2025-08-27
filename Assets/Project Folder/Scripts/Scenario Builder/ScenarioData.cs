@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class ScenarioData
 {
@@ -11,11 +10,11 @@ public class ScenarioData
 
     public int[] LayoutOrder { get; private set; } = new int[4];
 
-    public Sprite DefendantPhoto { get; private set; }
+    public Photo DefendantPhoto { get; private set; }
     public string DefendantFirstName { get; private set; }
     public string DefendantLastName { get; private set; }
 
-    public Sprite VictimPhoto { get; private set; }
+    public Photo VictimPhoto { get; private set; }
     public string VictimFirstName { get; private set; }
     public string VictimLastName { get; private set; }
 
@@ -23,14 +22,16 @@ public class ScenarioData
     public string ProcecutorStatement { get; private set; }
     public string AttorneyStatement { get; private set; }
 
+    public int ScenarioIndex { get; private set; }
+
     // Optional: constructor
     public ScenarioData(
     ScenarioTemplate template,
     int[] layoutOrder,
-    Sprite defendantPhoto,
+    Photo defendantPhoto,
     string defendantFirstName,
     string defendantLastName,
-    Sprite victimPhoto,
+    Photo victimPhoto,
     string victimFirstName,
     string victimLastName)
     {
@@ -46,6 +47,7 @@ public class ScenarioData
         ScenarioDescription = template.Description;
         ProcecutorStatement = template.ProsecutorStatement;
         AttorneyStatement = template.AttorneyStatement;
+        ScenarioIndex = template.ScnarioIndex;
     }
 
 }
@@ -74,18 +76,22 @@ public class ScenarioTemplate
     public string ProsecutorStatement { get; private set; }
     public string AttorneyStatement { get; private set; }
 
+    public int ScnarioIndex { get; private set; }
+
     public ScenarioTemplate(
         string description,
         ScenarioType scenarioType,
         CrimeType crimeType,
         string prosecutorStatement,
-        string attorneyStatement)
+        string attorneyStatement,
+        int scnarioIndex)
     {
         Description = description;
         ScenarioType = scenarioType;
         CrimeType = crimeType;
         ProsecutorStatement = prosecutorStatement;
         AttorneyStatement = attorneyStatement;
+        ScnarioIndex = scnarioIndex;
     }
 
     public void AddNamesToStatements(string defandantFirstName, string defandantLastName, string victimFirstName, string victimLastName)

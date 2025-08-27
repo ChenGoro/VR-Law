@@ -7,22 +7,20 @@ public class BailAmountChooser : MonoBehaviour
 {
     [SerializeField] private Slider slider;
     [SerializeField] private TextMeshPro Tiltle;
-    private float bailAmount;
+    private float bailAmount = -1;
     public float BailAmount { get { return bailAmount; } }
 
     public event Action sliderWasTouched;
     private void Awake()
     {
-
         slider.sliderWasTouched += () => sliderWasTouched?.Invoke();
-
-
     }
 
     public async UniTask<float> ShowAndWaitForBailAmount()
     {
+        bailAmount = -1; // reset previous value
         Show();
-        float bailAmount = await slider.WaitForConfirm();
+        bailAmount = await slider.WaitForConfirm();
         Hide();
         return bailAmount;
     }
@@ -30,6 +28,7 @@ public class BailAmountChooser : MonoBehaviour
     public async UniTask CancelWait()
     {
         await slider.CancelWait();
+        bailAmount = -1; // reset previous value
     }
 
 

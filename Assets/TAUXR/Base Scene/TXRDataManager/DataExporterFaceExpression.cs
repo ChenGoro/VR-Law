@@ -1,20 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
+using UnityEngine;
 
 public class DataExporterFaceExpression : MonoBehaviour
 {
     public string FileName = "";
-    OVRFaceExpressions OVRFace;
+    private OVRFaceExpressions OVRFace;
 
-    float[] AllWeights;     // updates every frame with the weights of all blendshapes
+    private float[] AllWeights;     // updates every frame with the weights of all blendshapes
 
-    StreamWriter writer;
-    string path;
+    private StreamWriter writer;
+    private string path;
+
+    private string UniqueParticipantId;
 
     public void Init()
     {
+        UniqueParticipantId = TXRDataManager.UniqueParticipantId;
+
         OVRFace = TXRPlayer.Instance.OVRFace;
 
         if (OVRFace == null)
@@ -55,7 +57,7 @@ public class DataExporterFaceExpression : MonoBehaviour
             return;
         }
 
-        if(!OVRFace.ValidExpressions)
+        if (!OVRFace.ValidExpressions)
         {
             Debug.LogWarning("Can't log face expression data because OVRFace data is not valid");
             return;
@@ -87,7 +89,7 @@ public class DataExporterFaceExpression : MonoBehaviour
     private string getPath()
     {
         string str = $"{Application.persistentDataPath}/";
-        str += $"{FileName}_FaceExpressionData_{TAUXRUtilities.GetFormattedDateTime(true)}.csv";
+        str += UniqueParticipantId + "_" + $"FaceExpressionData_{TAUXRUtilities.GetFormattedDateTime(true)}.csv";
         print(str);
         return str;
     }
