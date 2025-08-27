@@ -33,7 +33,7 @@ Material:
     - _CornerRadius: 0.053
     - _Feather: 0.001
     m_Colors:
-    - _FillColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 0.5019608}
+    - _FillColor: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 0.80784315}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &8132549167737735561
