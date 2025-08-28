@@ -1380,7 +1380,7 @@ PrefabInstance:
     - target: {fileID: 3065385290536760724, guid: 64dc0d379a4844145b03ee760c8fc855,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4235968531765072541, guid: 64dc0d379a4844145b03ee760c8fc855,
         type: 3}
@@ -1756,9 +1756,9 @@ MonoBehaviour:
   - Jeni
   - Maya
   lastNames:
-  - Moore
   - Brown
-  - Black
+  - Smith
+  - Davis
 --- !u!4 &671071010
 Transform:
   m_ObjectHideFlags: 0
@@ -3280,7 +3280,7 @@ PrefabInstance:
     - target: {fileID: 1741889627329219797, guid: d7c193c276ca653428c77dc001a52ada,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2072824164693398305, guid: d7c193c276ca653428c77dc001a52ada,
         type: 3}
@@ -18042,7 +18042,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5071954540751030568
 Transform:
   m_ObjectHideFlags: 0
