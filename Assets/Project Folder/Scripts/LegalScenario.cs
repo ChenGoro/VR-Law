@@ -17,6 +17,7 @@ public class LegalScenario : MonoBehaviour
     {
         gameObject.SetActive(true);
         TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Shown");
+        TtsCaller.I.SpeakNow(scenarioText.text);
 
         await UniTask.Delay(1000);
 
@@ -27,6 +28,8 @@ public class LegalScenario : MonoBehaviour
         await tcs.Task;
         TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Confirmed");
         confirmButton.VRButtonPressed.RemoveListener(onPressed);
+        TtsCaller.I.Cancel(); // in case TTS is still speaking, stop it.
+
 
         gameObject.SetActive(false);
         TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Hidden");

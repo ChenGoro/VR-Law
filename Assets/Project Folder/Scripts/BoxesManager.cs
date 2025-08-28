@@ -81,7 +81,7 @@ public class BoxesManager : MonoBehaviour
 
         Debug.Log("inside BoxesManagers ShowBoxesAndWaitForAll before for each");
 
-        foreach (var box in boxes)
+        foreach (Box box in boxes)
         {
             box.gameObject.SetActive(true);
             box.Init(OnBoxViewed);
@@ -99,6 +99,7 @@ public class BoxesManager : MonoBehaviour
             ContinuePressedTCS = new UniTaskCompletionSource();
             continueButton.VRButtonPressed.AddListener(OnContinuePressed);
             await ContinuePressedTCS.Task;
+            TtsCaller.I.Cancel(); // in case TTS is still speaking, stop it.
             continueButton.VRButtonPressed.RemoveAllListeners();
             Hide();
             viewedCount = 0;

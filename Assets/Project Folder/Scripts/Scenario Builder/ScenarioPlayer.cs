@@ -22,7 +22,7 @@ public class ScenarioPlayer : MonoBehaviour
 
     public async UniTask PlayScenario(ScenarioData scenarioData)
     {
-        await PlayLegalScenario(scenarioData);
+        await PlayLegalScenario(scenarioData); // scenario description
         //await PlayBoxesInstructions(scenarioData);
         await PlayBoxes(scenarioData);
         await PlayDesicion(scenarioData);

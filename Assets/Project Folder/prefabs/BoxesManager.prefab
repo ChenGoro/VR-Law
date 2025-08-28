@@ -910,7 +910,9 @@ MonoBehaviour:
   title: {fileID: 847465599340310262}
   content: {fileID: 8305212193697576200}
   closeButton: {fileID: 3155648018360365385}
-  titleText: {fileID: 5417039199485952317}
+  boxType: 2
+  contentText: {fileID: 0}
+  spriteRenderer: {fileID: 6556085640650242947}
 --- !u!114 &1271415002096150225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1178,7 +1180,9 @@ MonoBehaviour:
   title: {fileID: 3204572034208247654}
   content: {fileID: 6965707157648687881}
   closeButton: {fileID: 5475554039563487991}
-  titleText: {fileID: 5106530447437713970}
+  boxType: 3
+  contentText: {fileID: 0}
+  spriteRenderer: {fileID: 5722938423851108274}
 --- !u!114 &6436671943845868561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2099,7 +2103,9 @@ MonoBehaviour:
   title: {fileID: 7184402006996080763}
   content: {fileID: 7502671816228056730}
   closeButton: {fileID: 1198561935199474734}
-  titleText: {fileID: 8215675584075994987}
+  boxType: 1
+  contentText: {fileID: 2113955785577874808}
+  spriteRenderer: {fileID: 0}
 --- !u!114 &3716742051493048681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2477,7 +2483,9 @@ MonoBehaviour:
   title: {fileID: 438293651191647853}
   content: {fileID: 5586019244272760747}
   closeButton: {fileID: 709955059501487840}
-  titleText: {fileID: 4836234024040273528}
+  boxType: 0
+  contentText: {fileID: 1353169308043071206}
+  spriteRenderer: {fileID: 0}
 --- !u!114 &4383660312097612277
 MonoBehaviour:
   m_ObjectHideFlags: 0

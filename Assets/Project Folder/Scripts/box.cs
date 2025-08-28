@@ -1,5 +1,7 @@
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+
 
 public class Box : MonoBehaviour
 {
@@ -8,7 +10,17 @@ public class Box : MonoBehaviour
     public GameObject content;
     public VR_Button closeButton;
 
-    public TextMeshPro titleText;
+    public BoxType boxType;
+
+    private bool IsStatementBox =>
+    boxType == BoxType.AttorneysStatement || boxType == BoxType.ProsecutorsStatement;
+    private bool IsPhotoBox =>
+        boxType == BoxType.DefendantPhoto || boxType == BoxType.VictimPhoto;
+
+    [SerializeField, ShowIf("IsStatementBox")]
+    private TextMeshPro contentText;
+    [SerializeField, ShowIf("IsPhotoBox")]
+    private SpriteRenderer spriteRenderer;
 
     private bool wasOpened = false;
     private System.Action onBoxViewed;
@@ -31,8 +43,10 @@ public class Box : MonoBehaviour
             Debug.LogError($"{name}: title reference is missing in the inspector.");
         if (content == null)
             Debug.LogError($"{name}: content reference is missing in the inspector.");
-        if (titleText == null)
-            Debug.LogError($"{name}: titleText reference is missing in the inspector.");
+        if (IsStatementBox && contentText == null)
+            Debug.LogError($"{name}: contentText reference is missing in the inspector for a statement box.");
+        if (IsPhotoBox && spriteRenderer == null)
+            Debug.LogError($"{name}: sprite reference is missing in the inspector for a photo box.");
     }
 
     public void Init(System.Action onViewedCallback)
@@ -63,7 +77,7 @@ public class Box : MonoBehaviour
         }
     }
 
-    public void OnBoxClicked()
+    private void OnBoxClicked()
     {
         Debug.Log($"{name} was clicked.");
         ShowContent();
@@ -81,8 +95,13 @@ public class Box : MonoBehaviour
         if (!wasOpened)
         {
             wasOpened = true;
-            dataManager.ReportBoxEvent(MainExperiment.Instance.ScenarioIndex, titleText.text, layoutOrder, "opened");
+            dataManager.ReportBoxEvent(MainExperiment.Instance.ScenarioIndex, boxType.ToString(), layoutOrder, "opened");
             onBoxViewed?.Invoke();
+        }
+
+        if (IsStatementBox)
+        {
+            TtsCaller.I.SpeakNow(contentText.text);
         }
     }
 
@@ -93,7 +112,37 @@ public class Box : MonoBehaviour
 
         if (closeButton != null)
             closeButton.gameObject.SetActive(false);
-        dataManager.ReportBoxEvent(MainExperiment.Instance.ScenarioIndex, titleText.text, layoutOrder, "closed");
+        dataManager.ReportBoxEvent(MainExperiment.Instance.ScenarioIndex, boxType.ToString(), layoutOrder, "closed");
     }
 
+    public void LoadScenarioAssets(ScenarioData scenario)
+    {
+        switch (boxType)
+        {
+            case BoxType.AttorneysStatement:
+                contentText.text = scenario.AttorneyStatement;
+                break;
+            case BoxType.ProsecutorsStatement:
+                contentText.text = scenario.ProcecutorStatement;
+                break;
+            case BoxType.DefendantPhoto:
+                spriteRenderer.sprite = scenario.DefendantPhoto.Sprite;
+                break;
+            case BoxType.VictimPhoto:
+                spriteRenderer.sprite = scenario.VictimPhoto.Sprite;
+                break;
+            default:
+                Debug.LogError($"{name}: Unknown box type {boxType}");
+                break;
+        }
+    }
+
+}
+
+public enum BoxType
+{
+    AttorneysStatement,
+    ProsecutorsStatement,
+    DefendantPhoto,
+    VictimPhoto
 }

@@ -104,6 +104,9 @@ public sealed class AndroidPiperTtsService : ITtsService
         // Optional: sanity log
         LogPiperAssets(Application.persistentDataPath.Replace("\\", "/") + "/piper", voiceId);
 
+        // switch to a background thread for native synth & resample
+        await Cysharp.Threading.Tasks.UniTask.SwitchToThreadPool();
+
         // 2) Create (or reuse) the native synth for this voice
         if (_synth == System.IntPtr.Zero || _loadedVoiceId != voiceId)
         {
