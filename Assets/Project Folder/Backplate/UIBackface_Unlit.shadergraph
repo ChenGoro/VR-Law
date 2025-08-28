@@ -769,6 +769,20 @@
             },
             "m_InputSlot": {
                 "m_Node": {
+                    "m_Id": "458e3fd9a3b94a09a014e494f922ee28"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "8196750374cf48809de8d3fadf33ad94"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
                     "m_Id": "db7abacc7db546538eda6e5aaaf13295"
                 },
                 "m_SlotId": 2
@@ -1330,20 +1344,6 @@
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "d2e62ce096204d73abdc6cf9256bab77"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "db7abacc7db546538eda6e5aaaf13295"
-                },
-                "m_SlotId": 0
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "458e3fd9a3b94a09a014e494f922ee28"
                 },
                 "m_SlotId": 0
             }
@@ -2362,7 +2362,7 @@
     "m_Title": "Screen UV",
     "m_Position": {
         "x": 1333.0,
-        "y": 3176.000244140625
+        "y": 3175.999755859375
     }
 }
 
@@ -3263,7 +3263,7 @@
     "m_Title": "Local position in meters",
     "m_Position": {
         "x": -259.0,
-        "y": 386.9999694824219
+        "y": 386.99993896484377
     }
 }
 
@@ -3867,7 +3867,7 @@
     "m_Title": "Blur • texel & offset (px→uv)",
     "m_Position": {
         "x": 1277.0001220703125,
-        "y": 2577.000244140625
+        "y": 2576.999755859375
     }
 }
 
@@ -5242,8 +5242,8 @@
     "m_ObjectId": "7f3d1f1beab44a1d9ec092559613bfd0",
     "m_Title": "Blur • 5 taps (Scene Color)",
     "m_Position": {
-        "x": 2734.00048828125,
-        "y": 2724.000732421875
+        "x": 2733.999755859375,
+        "y": 2723.99951171875
     }
 }
 
@@ -5951,8 +5951,8 @@
     "m_ObjectId": "8c4a6ee7d5ba4d91a41836f6feb6a705",
     "m_Title": "BlurRGB",
     "m_Position": {
-        "x": 2973.00048828125,
-        "y": 2046.0
+        "x": 2972.999755859375,
+        "y": 2045.9998779296875
     }
 }
 
@@ -8793,8 +8793,8 @@
     "m_ObjectId": "daae63928673487ea93e756ae0da78c5",
     "m_Title": "half-size (backface extents)",
     "m_Position": {
-        "x": 94.00000762939453,
-        "y": 1051.0001220703125
+        "x": 94.0,
+        "y": 1050.9998779296875
     }
 }
 
