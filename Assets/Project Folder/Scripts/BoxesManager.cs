@@ -79,14 +79,12 @@ public class BoxesManager : MonoBehaviour
         viewedCount = 0;
         allBoxesViewedTCS = new UniTaskCompletionSource();
 
-        Debug.Log("inside BoxesManagers ShowBoxesAndWaitForAll before for each");
 
         foreach (Box box in boxes)
         {
             box.gameObject.SetActive(true);
             box.Init(OnBoxViewed);
 
-            Debug.Log("inside BoxesManagers ShowBoxesAndWaitForAll after for each");
         }
 
         ShowContinueInstructionsForSeconds(ContinueInstructionsShowTime).Forget();

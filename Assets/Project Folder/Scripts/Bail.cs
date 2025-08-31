@@ -11,7 +11,7 @@ public class Bail : MonoBehaviour
     [SerializeField] private VR_Button RORButton;
     [SerializeField] private VR_Button ROBButton;
     [SerializeField] private VR_Button JailButton;
-    [SerializeField] private BailAmountChooser bailAmountChooser;
+    [SerializeField] private AmountChooser bailAmountChooser;
 
     private BailOption[] bailOptions;
     private BailOptionType choice;
@@ -30,8 +30,12 @@ public class Bail : MonoBehaviour
 
     public void LoadScenarioAssets(ScenarioData scenarioData)
     {
-        string fullName = $"{scenarioData.DefendantFirstName} {scenarioData.DefendantLastName}";
-        // change the options text so that the defandats name appears TODO
+        foreach (BailOption option in bailOptions)
+        {
+            option.SetDefendantName(scenarioData.DefendantFirstName, scenarioData.DefendantLastName);
+        }
+
+        bailAmountChooser.SetDefendantNameAndIncomeOnBail(scenarioData.DefendantFirstName, scenarioData.DefendantLastName, scenarioData.AnnualIncome);
     }
 
     public async UniTask<(BailOptionType, float)> ShowUntilChoiceMade()
@@ -39,13 +43,13 @@ public class Bail : MonoBehaviour
         float bailAmount = -1f;
         Show();
         timeShowed = Time.time;
-        //bailAmountChooser.Hide(); // old flow: bail amount chooser only shows if ROB is chosen 
+        //bailAmountChooser.Hide(); // old flow: bail amount chooser only shows if ROB is chosen. new flow: always show it, but disable ROB button until amount is touched. for that the confirm button for the slider and for the desicion on bail desition are THE SAME BUTTON 
         await UniTask.Yield(); // ensure buttons are initialized before awaiting
 
         // initially disable ROB button until bail amount is touched
         ROBButton.SetButtonEnabled(false);
         bailAmountChooser.sliderWasTouched += EnableROBbutton;
-        bailAmountChooser.ShowAndWaitForBailAmount().Forget();
+        bailAmountChooser.ShowAndWaitForAmount().Forget();
 
         // wait for one of the buttons to be pressed
         tcs = new UniTaskCompletionSource();
@@ -53,17 +57,16 @@ public class Bail : MonoBehaviour
         RORButton.VRButtonPressed.AddListener(RORwasPressed);
         JailButton.VRButtonPressed.AddListener(JailWasPressed);
         await tcs.Task;
+        timeChosen = Time.time;
 
         TXRDataManager.Instance.ReportPanelOrConfirmationEvent(MainExperiment.Instance.ScenarioIndex, name, "Confirmed");
 
-        timeChosen = Time.time;
-
         if (choice == BailOptionType.ROB)
         {
-            bailAmount = bailAmountChooser.BailAmount;
+            bailAmount = bailAmountChooser.Amount;
         }
 
-        TXRDataManager.Instance.ReportDecision(MainExperiment.Instance.ScenarioIndex, "Bail", choice.ToString(), bailAmount, -1, timeChosen - timeShowed);
+        TXRDataManager.Instance.ReportDecision(MainExperiment.Instance.ScenarioIndex, "Bail", choice.ToString(), bailAmount, -1, -1, timeChosen - timeShowed);
 
         await bailAmountChooser.CancelWait();
 
@@ -116,7 +119,6 @@ public class Bail : MonoBehaviour
     {
         foreach (BailOption option in bailOptions)
         {
-            Debug.Log($"Bail: setting visibility of {option.bailOptionType} to {visible}");
             if (visible) option.Show();
             else option.Hide();
         }

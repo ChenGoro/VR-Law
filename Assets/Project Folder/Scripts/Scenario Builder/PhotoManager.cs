@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PhotoManager : MonoBehaviour
-    /*
-     * in charge of loading the photo assets, putting them in queues and shuffles them
-     */
+/*
+ * in charge of loading the photo assets, putting them in queues and shuffles them
+ */
 {
     public string resourcesFolder = "Photos"; // Folder under Resources/
 
@@ -42,21 +42,23 @@ public class PhotoManager : MonoBehaviour
         ShuffleList(malePhotos); // Randomize male photos
         ShuffleList(femalePhotos);
 
-        int halfMaleCount = malePhotos.Count / 2;
-
-
         //TODO figure out the correct way so separate the number of males to defendant and victim 
+
+
+        //take the ceiling
+        int halfMaleCount = Mathf.CeilToInt(malePhotos.Count / 2f);
+
         // If odd number of male photos, leave one out and log it
-        if (malePhotos.Count % 2 != 0)
-        {
-            Photo dropped = malePhotos[malePhotos.Count - 1];
-            Debug.LogWarning($"Dropped photo to balance queues: {dropped.FullPhotoName}");
-            malePhotos.RemoveAt(malePhotos.Count - 1);
-        }
+        //if (malePhotos.Count % 2 != 0)
+        //{
+        //    Photo dropped = malePhotos[malePhotos.Count - 1];
+        //    Debug.LogWarning($"Dropped photo to balance queues: {dropped.FullPhotoName}");
+        //    malePhotos.RemoveAt(malePhotos.Count - 1);
+        //}
 
         List<Photo> defendantPhotos = malePhotos.GetRange(0, halfMaleCount);
         List<Photo> victimPhotos = new List<Photo>(femalePhotos);
-        victimPhotos.AddRange(malePhotos.GetRange(halfMaleCount, halfMaleCount));
+        victimPhotos.AddRange(malePhotos.GetRange(halfMaleCount, malePhotos.Count - halfMaleCount));
 
         // Make sure both lists are the same length
         int finalCount = Mathf.Min(defendantPhotos.Count, victimPhotos.Count);

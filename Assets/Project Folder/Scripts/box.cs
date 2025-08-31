@@ -72,21 +72,17 @@ public class Box : MonoBehaviour
     {
         if (other.CompareTag("Toucher") && boxMesh.activeSelf)
         {
-            Debug.Log($"{name}: Touched by {other.name}");
             OnBoxClicked();
         }
     }
 
     private void OnBoxClicked()
     {
-        Debug.Log($"{name} was clicked.");
         ShowContent();
     }
 
     private void ShowContent()
     {
-        Debug.Log($"{name}: Showing content...");
-
         content.SetActive(true);
 
         if (closeButton != null)
@@ -107,7 +103,6 @@ public class Box : MonoBehaviour
 
     private void HideContent()
     {
-        Debug.Log($"{name}: Hiding content...");
         content.SetActive(false);
 
         if (closeButton != null)

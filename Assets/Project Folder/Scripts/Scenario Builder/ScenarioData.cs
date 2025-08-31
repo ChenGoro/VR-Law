@@ -22,6 +22,7 @@ public class ScenarioData
     public string ProcecutorStatement { get; private set; }
     public string AttorneyStatement { get; private set; }
 
+    public float AnnualIncome { get; private set; }
     public int ScenarioIndex { get; private set; }
 
     // Optional: constructor
@@ -47,6 +48,7 @@ public class ScenarioData
         ScenarioDescription = template.Description;
         ProcecutorStatement = template.ProsecutorStatement;
         AttorneyStatement = template.AttorneyStatement;
+        AnnualIncome = template.AnnualIncome;
         ScenarioIndex = template.ScnarioIndex;
     }
 
@@ -75,7 +77,7 @@ public class ScenarioTemplate
     public CrimeType CrimeType { get; private set; }
     public string ProsecutorStatement { get; private set; }
     public string AttorneyStatement { get; private set; }
-
+    public float AnnualIncome { get; private set; }
     public int ScnarioIndex { get; private set; }
 
     public ScenarioTemplate(
@@ -83,7 +85,7 @@ public class ScenarioTemplate
         ScenarioType scenarioType,
         CrimeType crimeType,
         string prosecutorStatement,
-        string attorneyStatement,
+        string attorneyStatement, float annualIncome,
         int scnarioIndex)
     {
         Description = description;
@@ -91,6 +93,7 @@ public class ScenarioTemplate
         CrimeType = crimeType;
         ProsecutorStatement = prosecutorStatement;
         AttorneyStatement = attorneyStatement;
+        AnnualIncome = annualIncome;
         ScnarioIndex = scnarioIndex;
     }
 

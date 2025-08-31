@@ -35,7 +35,6 @@ public class VR_Button : MonoBehaviour
         if (disabled) return;
         if (other.gameObject.CompareTag("Toucher"))
         {
-            Debug.Log("VRButton: inside OnTriggerEnter, Tag is Toucher");
             VRButtonPressed.Invoke();
         }
     }

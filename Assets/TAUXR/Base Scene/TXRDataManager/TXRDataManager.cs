@@ -51,6 +51,7 @@ public class ScenarioInfo : AnalyticsDataClass
     public string Description;
     public string AttorneysStatement;
     public string ProcecutorsStatement;
+    public float AnnualIncome;
     public string DefandantsFirstName;
     public string DefandantsLastName;
     public string DefandantsGender;
@@ -71,6 +72,7 @@ public class ScenarioInfo : AnalyticsDataClass
         Description = scenarioData.ScenarioDescription;
         AttorneysStatement = scenarioData.AttorneyStatement;
         ProcecutorsStatement = scenarioData.ProcecutorStatement;
+        AnnualIncome = scenarioData.AnnualIncome;
         DefandantsFirstName = scenarioData.DefendantFirstName;
         DefandantsLastName = scenarioData.DefendantLastName;
         DefandantsGender = scenarioData.DefendantPhoto.Gender.ToString();
@@ -185,7 +187,7 @@ public class TXRDataManager : TXRSingleton<TXRDataManager>
     }
 
     // log a decision to Decisions file.
-    public void ReportDecision(int scenarioIndex, string scenarioType, string decision, float bailAmount, float sentenceLength, float rt)
+    public void ReportDecision(int scenarioIndex, string scenarioType, string decision, float bailAmount, float sentenceLength, float fineAmount, float rt)
     {
         decisions = new Decisions(scenarioIndex, scenarioType, decision, bailAmount, sentenceLength, rt);
         WriteAnalyticsToFile(decisions);

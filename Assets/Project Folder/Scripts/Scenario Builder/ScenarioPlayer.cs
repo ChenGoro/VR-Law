@@ -9,6 +9,7 @@ public class ScenarioPlayer : MonoBehaviour
     public BoxesManager boxes;
     public Instructions endSenarioInstructions;
     public Bail bailDecision;
+    public Sentence sentenceDecision;
 
     private void Start()
     {
@@ -18,15 +19,17 @@ public class ScenarioPlayer : MonoBehaviour
         boxes.Hide();
         endSenarioInstructions.Hide();
         bailDecision.Hide();
+        sentenceDecision.Hide();
     }
 
-    public async UniTask PlayScenario(ScenarioData scenarioData)
+    //is last scenario is used to skip the end scenario instructions
+    public async UniTask PlayScenario(ScenarioData scenarioData, bool isLastScenario = false)
     {
         await PlayLegalScenario(scenarioData); // scenario description
         //await PlayBoxesInstructions(scenarioData);
         await PlayBoxes(scenarioData);
         await PlayDesicion(scenarioData);
-        await PlayEndScenarioInstructions(scenarioData);
+        if (!isLastScenario) await PlayEndScenarioInstructions(scenarioData);
     }
 
     private async UniTask PlayLegalScenario(ScenarioData scenarioData)
@@ -60,14 +63,20 @@ public class ScenarioPlayer : MonoBehaviour
                 break;
 
             case ScenarioType.Sentencing:
-                Debug.Log("No sentencing component implemented yet");
+                sentenceDecision.LoadScenarioAssets(scenarioData);
+                SentenceOptionType sentenceChoice;
+                float sentenceLength;
+                float fineAmount;
+                (sentenceChoice, sentenceLength, fineAmount) = await sentenceDecision.ShowUntilChoiceMade();
+                TXRDataManager.Instance.LogLineToFile($"{scenarioData.ScenarioDescription}: sentence choice = {sentenceChoice}, sentence length = {sentenceLength}, fine amount = {fineAmount}");
                 break;
         }
     }
 
+
     private async UniTask PlayEndScenarioInstructions(ScenarioData scenarioData)
     {
-
         await endSenarioInstructions.ShowUntilConfirm();
     }
+
 }

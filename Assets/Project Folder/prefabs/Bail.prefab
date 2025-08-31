@@ -53,7 +53,7 @@ MonoBehaviour:
   RORButton: {fileID: 6284288312914644398}
   ROBButton: {fileID: 9010945847084373754}
   JailButton: {fileID: 4994949904868339830}
-  bailAmountChooser: {fileID: 8489734329387516347}
+  bailAmountChooser: {fileID: 0}
 --- !u!1 &6395443128926213455
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,18 +821,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9fe1ff5d99553042ac81d6a3764178a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8489734329387516347 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5759255886895413035, guid: f27a630d604e03640a0bbcf889fc31e6,
-    type: 3}
-  m_PrefabInstance: {fileID: 4196621286261094032}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4c3b8b0b4ceb464181e763c67f20e68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &8778580311401896642 stripped

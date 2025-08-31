@@ -429,7 +429,7 @@ public class Slider : MonoBehaviour
 
     private void SetValueFromColliderPosition(Vector3 worldPos)
     {
-        Debug.Log($"[Slider] SetValueFromColliderPosition: {worldPos}");
+        //Debug.Log($"[Slider] SetValueFromColliderPosition: {worldPos}");
         Vector3 closestPoint = GetClosestPointOnSegment(worldPos);
         float t = GetTOnSegment(closestPoint);
         ApplyFromNormalized(t);

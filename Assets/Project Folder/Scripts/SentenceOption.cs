@@ -1,13 +1,13 @@
 using TMPro;
 using UnityEngine;
-public class BailOption : MonoBehaviour
+
+public class SentenceOption : MonoBehaviour
 {
     public TextMeshPro text;
     public TextMeshPro title;
     public VR_Button button;
-    public BailOptionType bailOptionType;
+    public SentenceOptionType sentenceOptionType;
     public GameObject Backface;
-
 
     public void Show()
     {
@@ -33,9 +33,9 @@ public class BailOption : MonoBehaviour
     }
 }
 
-public enum BailOptionType
+public enum SentenceOptionType
+
 {
-    ROR,
-    ROB,
-    Jail
+    Sentence,
+    Fine
 }

@@ -67,7 +67,10 @@ public class ScenarioLibrary : MonoBehaviour
                 string prosecutor = fields[3];
                 string attorney = fields[4];
 
-                templates.Add(new ScenarioTemplate(desc, type, crime, prosecutor, attorney, i));
+                if (!float.TryParse(fields[5], out float income))
+                    throw new System.Exception($"Invalid AnnualIncome value: '{fields[5]}'");
+
+                templates.Add(new ScenarioTemplate(desc, type, crime, prosecutor, attorney, income, i));
             }
             catch (System.Exception ex)
             {
@@ -75,7 +78,7 @@ public class ScenarioLibrary : MonoBehaviour
             }
 
         }
-
+        Debug.Log($"[ScenarioLibrary] Loaded {templates.Count} scenario templates from CSV.");
         return templates;
     }
 

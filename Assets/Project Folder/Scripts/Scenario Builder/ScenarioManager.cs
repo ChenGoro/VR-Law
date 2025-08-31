@@ -67,7 +67,7 @@ public class ScenarioManager : MonoBehaviour
             scenarioDataList.Add(scenario);
         }
 
-        Debug.Log($"Initialized {scenarioDataList.Count} scenarios.");
+        Debug.Log($"[ScenarioManager] Initialized {scenarioDataList.Count} scenarios to play.");
     }
 
 

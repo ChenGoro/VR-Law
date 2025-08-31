@@ -1,5 +1,5 @@
 using Cysharp.Threading.Tasks;
-using UnityEngine.Events;
+using UnityEngine;
 
 public class MainExperiment : TXRSingleton<MainExperiment>
 {
@@ -31,23 +31,25 @@ public class MainExperiment : TXRSingleton<MainExperiment>
             scenarioIndex = currentScenario.ScenarioIndex;
             TXRDataManager.Instance.ReportScenarioInfo(currentScenario);
 
-            await scenarioPlayer.PlayScenario(currentScenario);
+            bool isLastScenario = IsLastScenario(scenarioIndex);
+            await scenarioPlayer.PlayScenario(currentScenario, isLastScenario);
         }
 
+        await sceneReferencer.endOfExperimentInstructions.ShowUntilConfirm();
+
+        // quit application
+        Application.Quit();
     }
 
     private void Init()
     {
         sceneReferencer = SceneReferencer.Instance;
         sceneReferencer.generalInstructions.Hide();
+        sceneReferencer.endOfExperimentInstructions.Hide();
     }
 
-    private async UniTask WaitForVRButtonPress(VR_Button button)
+    private bool IsLastScenario(int index)
     {
-        var tcs = new UniTaskCompletionSource();
-        UnityAction listener = () => tcs.TrySetResult();
-        button.VRButtonPressed.AddListener(listener);
-        await tcs.Task;
-        button.VRButtonPressed.RemoveListener(listener);
+        return !sceneReferencer.scenarioManager.HasNextScenario();
     }
 }

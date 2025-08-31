@@ -26,9 +26,8 @@ MonoBehaviour:
     probeSamplingDebugMesh: {fileID: 0}
     probeSamplingDebugTexture: {fileID: 0}
     probeVolumeBlendStatesCS: {fileID: 0}
-  m_RendererFeatures:
-  - {fileID: 430483765890045717}
-  m_RendererFeatureMap: 15d7724bb462f905
+  m_RendererFeatures: []
+  m_RendererFeatureMap: 
   m_UseNativeRenderPass: 0
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 0}
@@ -73,3 +72,4 @@ MonoBehaviour:
     sigma: 2.5
     globalTextureName: _BlurTex
     debugBindCameraColor: 0
+  _mat: {fileID: 0}

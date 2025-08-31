@@ -185,7 +185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4895039626805668946}
-  - component: {fileID: 5759255886895413035}
+  - component: {fileID: 1504387111902083745}
   m_Layer: 0
   m_Name: Bail Amount Chooser
   m_TagString: Untagged
@@ -210,7 +210,7 @@ Transform:
   - {fileID: 8152769788205595271}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5759255886895413035
+--- !u!114 &1504387111902083745
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9139660457970034486}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4c3b8b0b4ceb464181e763c67f20e68, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a9de618db7dbac408a1a048e98c25d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 7017032903351008601}
