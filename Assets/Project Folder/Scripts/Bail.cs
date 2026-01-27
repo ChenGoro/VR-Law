@@ -34,6 +34,9 @@ public class Bail : MonoBehaviour
         {
             option.SetDefendantName(scenarioData.DefendantFirstName, scenarioData.DefendantLastName);
         }
+        // replace the name in the title
+        string newTitle = title.text.Replace("Doe", scenarioData.DefendantLastName);
+        title.text = newTitle;
 
         bailAmountChooser.SetDefendantNameAndIncomeOnBail(scenarioData.DefendantFirstName, scenarioData.DefendantLastName, scenarioData.AnnualIncome);
     }

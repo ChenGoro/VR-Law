@@ -53,9 +53,9 @@ public class AmountChooser : MonoBehaviour
         string formattedIncome = $"${annualIncome:N0}.";
 
         string firstLine = "Doe's Annual income is";
-        string secondLine = "\\r\\nThe Bail amount should be:";
+        string secondLine = "\\r\\nDoe must pay:";
 
-        string newText = firstLine.Replace("Doe", defendantLastName) + " " + formattedIncome + secondLine;
+        string newText = firstLine.Replace("Doe", defendantLastName) + " " + formattedIncome + secondLine.Replace("Doe", defendantLastName);
         Tiltle.text = newText;
 
     }
