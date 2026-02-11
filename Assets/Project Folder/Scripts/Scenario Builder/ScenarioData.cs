@@ -15,8 +15,6 @@ public class ScenarioData
     public string DefendantLastName { get; private set; }
 
     public Photo VictimPhoto { get; private set; }
-    public string VictimFirstName { get; private set; }
-    public string VictimLastName { get; private set; }
 
     public string ScenarioDescription { get; private set; }
     public string ProcecutorStatement { get; private set; }
@@ -32,9 +30,7 @@ public class ScenarioData
     Photo defendantPhoto,
     string defendantFirstName,
     string defendantLastName,
-    Photo victimPhoto,
-    string victimFirstName,
-    string victimLastName)
+    Photo victimPhoto)
     {
         ScenarioType = template.ScenarioType;
         CrimeType = template.CrimeType;
@@ -43,8 +39,6 @@ public class ScenarioData
         DefendantFirstName = defendantFirstName;
         DefendantLastName = defendantLastName;
         VictimPhoto = victimPhoto;
-        VictimFirstName = victimFirstName;
-        VictimLastName = victimLastName;
         ScenarioDescription = template.Description;
         ProcecutorStatement = template.ProsecutorStatement;
         AttorneyStatement = template.AttorneyStatement;
@@ -97,14 +91,12 @@ public class ScenarioTemplate
         ScnarioIndex = scnarioIndex;
     }
 
-    public void AddNamesToStatements(string defandantFirstName, string defandantLastName, string victimFirstName, string victimLastName)
+    public void AddNamesToStatements(string defandantFirstName, string defandantLastName)
     {
         Dictionary<string, string> namesCodes = new Dictionary<string, string>
         {
             { "*defandantFirstName*", defandantFirstName },
             { "*defandantLastName*", defandantLastName },
-            { "*victimFirstName*", victimFirstName },
-            { "*victimLastName*", victimLastName },
 
             { "John", defandantFirstName },
             { "Doe", defandantLastName },

@@ -43,15 +43,22 @@ public class ScenarioManager : MonoBehaviour
             Photo defendant = PhotoManager.DefendantQueue.Next();
             Photo victim = PhotoManager.VictimQueue.Next();
 
-            string defFirst = GetRandomName(defendant.Gender);
-            string defLast = GetRandomLastName();
-            string vicFirst = GetRandomName(victim.Gender);
-            string vicLast = GetRandomLastName();
+            string defFirst;
+            string defLast;
+            if (SceneReferencer.Instance.ShouldRandomizeName)
+            {
+                defFirst = GetRandomName(defendant.Gender);
+                defLast = GetRandomLastName();
+            }
+            else
+            {
+                defFirst = "John";
+                defLast = "Doe";
+            }
 
             int[] layoutOrder = GenerateRandomLayoutOrder();
 
-            template.AddNamesToStatements(defFirst, defLast, vicFirst, vicLast);
-
+            template.AddNamesToStatements(defFirst, defLast);
 
             ScenarioData scenario = new ScenarioData(
                 template,
@@ -59,9 +66,7 @@ public class ScenarioManager : MonoBehaviour
                 defendant,
                 defFirst,
                 defLast,
-                victim,
-                vicFirst,
-                vicLast
+                victim
             );
 
             scenarioDataList.Add(scenario);
@@ -126,7 +131,6 @@ public class ScenarioManager : MonoBehaviour
         {
             Debug.Log($"Description: {scenario.ScenarioDescription}");
             Debug.Log($"Defendant: {scenario.DefendantFirstName} {scenario.DefendantLastName}");
-            Debug.Log($"Victim: {scenario.VictimFirstName} {scenario.VictimLastName}");
             Debug.Log($"Defendant Photo: {scenario.DefendantPhoto.Sprite.name}");
             Debug.Log($"Victim Photo: {scenario.VictimPhoto.Sprite.name}");
             Debug.Log($"Layout Order: {string.Join(", ", scenario.LayoutOrder)}");

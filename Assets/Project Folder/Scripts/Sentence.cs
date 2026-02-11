@@ -32,6 +32,10 @@ public class Sentence : MonoBehaviour
         {
             option.SetDefendantName(scenarioData.DefendantFirstName, scenarioData.DefendantLastName);
         }
+
+        string newTitle = title.text.Replace("Doe", scenarioData.DefendantLastName);
+        title.text = newTitle;
+
         sentenceLengthChooser.SetDefendantName(scenarioData.DefendantFirstName, scenarioData.DefendantLastName);
         fineAmountChooser.SetDefendantNameAndIncomeOnFine(scenarioData.DefendantFirstName, scenarioData.DefendantLastName, scenarioData.AnnualIncome);
     }
