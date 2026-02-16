@@ -2,18 +2,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PhotoManager : MonoBehaviour
-/*
- * in charge of loading the photo assets, putting them in queues and shuffles them
- */
 {
-    public string resourcesFolder = "Photos"; // Folder under Resources/
+    [Tooltip("Assign the CFD database (created via Tools > VR-Law > Load CFD Images). If null, falls back to legacy Resources folder.")]
+    [SerializeField] private CFDImageDatabase imageDatabase;
+
+    [Tooltip("Legacy fallback: used only when Image Database is not set.")]
+    public string resourcesFolder = "Photos";
 
     public PhotoQueue DefendantQueue { get; private set; }
     public PhotoQueue VictimQueue { get; private set; }
 
     public void Init()
     {
-        List<Photo> allPhotos = LoadAllPhotos(resourcesFolder);
+        List<Photo> allPhotos;
+        if (imageDatabase != null && imageDatabase.Entries != null && imageDatabase.Entries.Count > 0)
+        {
+            allPhotos = new List<Photo>();
+            foreach (var entry in imageDatabase.Entries)
+                allPhotos.Add(new Photo(entry));
+        }
+        else
+        {
+            if (imageDatabase == null)
+                Debug.LogWarning("[PhotoManager] No CFD Image Database assigned; using legacy folder " + resourcesFolder);
+            allPhotos = LoadAllPhotos(resourcesFolder);
+        }
+
         BuildQueues(allPhotos);
     }
 
@@ -34,18 +48,15 @@ public class PhotoManager : MonoBehaviour
         return photoList;
     }
 
+    /// <summary>Randomization rules: adjust here (or in a dedicated queue-builder) when new rules apply (e.g. attractiveness, race balance).</summary>
     private void BuildQueues(List<Photo> allPhotos)
     {
         List<Photo> femalePhotos = allPhotos.FindAll(p => p.Gender == Gender.Female);
         List<Photo> malePhotos = allPhotos.FindAll(p => p.Gender == Gender.Male);
 
-        ShuffleList(malePhotos); // Randomize male photos
+        ShuffleList(malePhotos);
         ShuffleList(femalePhotos);
 
-        //TODO figure out the correct way so separate the number of males to defendant and victim 
-
-
-        //take the ceiling
         int halfMaleCount = Mathf.CeilToInt(malePhotos.Count / 2f);
 
         // If odd number of male photos, leave one out and log it

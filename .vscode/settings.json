@@ -1,0 +1,35 @@
+{
+    "files.exclude": {
+        "**/*.meta": true,
+        "**/Library": true,
+        "**/Temp": true,
+        "**/obj": true,
+        "**/Logs": true,
+        "**/Build": true,
+        "**/.vs": true
+    },
+    "search.exclude": {
+        "**/*.meta": true,
+        "**/Library": true,
+        "**/Temp": true,
+        "**/obj": true,
+        "**/Logs": true,
+        "**/Build": true,
+        "**/.vs": true
+    },
+    "files.watcherExclude": {
+        "**/Library/**": true,
+        "**/Temp/**": true,
+        "**/obj/**": true,
+        "**/Logs/**": true,
+        "**/Build/**": true
+    },
+    "dotnet.defaultSolution": "VR-Law.sln",
+    "dotrush.enableCodeLens": true,
+    "dotrush.enableIntelliSense": true,
+    "dotrush.roslyn.projectOrSolutionFiles": [
+        "VR-Law.sln"
+    ],
+    "dotrush.roslyn.useEditorConfig": true,
+    "dotrush.roslyn.enableRoslynAnalyzers": true
+}

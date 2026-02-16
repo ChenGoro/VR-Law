@@ -75,10 +75,10 @@ public class ScenarioInfo : AnalyticsDataClass
         DefandantsLastName = scenarioData.DefendantLastName;
         DefandantsGender = scenarioData.DefendantPhoto.Gender.ToString();
         DefandantsRace = scenarioData.DefendantPhoto.Race.ToString();
-        DefandantsPhoto = scenarioData.DefendantPhoto.Sprite.name;
+        DefandantsPhoto = scenarioData.DefendantPhoto.Id;
         VictimsGender = scenarioData.VictimPhoto.Gender.ToString();
         VictimsRace = scenarioData.VictimPhoto.Race.ToString();
-        VictimsPhoto = scenarioData.VictimPhoto.Sprite.name;
+        VictimsPhoto = scenarioData.VictimPhoto.Id;
     }
 }
 

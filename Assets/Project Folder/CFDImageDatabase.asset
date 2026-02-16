@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 310c30eb804baf649ac60fd407a3a123, type: 3}
+  m_Name: CFDImageDatabase
+  m_EditorClassIdentifier: 
+  resourcesSubfolder: CFD_Images
+  entries:
+  - Id: CFD-BF-036-027-N
+    Gender: 1
+    Race: 0
+    Attractiveness: 27
+    Expression: N
+    Sprite: {fileID: 21300000, guid: 854deddce32b20545810c573f1abd080, type: 3}
+  - Id: CFD-BF-200-080-N
+    Gender: 1
+    Race: 0
+    Attractiveness: 80
+    Expression: N
+    Sprite: {fileID: 21300000, guid: 8fe618b89c3f6d542a0f4b38caedb4e9, type: 3}
+  - Id: CFD-BM-001-014-N
+    Gender: 0
+    Race: 0
+    Attractiveness: 14
+    Expression: N
+    Sprite: {fileID: 21300000, guid: 73057bb02bf040144b8a9f07483a457a, type: 3}
+  - Id: CFD-BM-005-003-N
+    Gender: 0
+    Race: 0
+    Attractiveness: 3
+    Expression: N
+    Sprite: {fileID: 21300000, guid: d2b71e00d1296584fa0ae50de2adc90f, type: 3}
+  - Id: CFD-BM-011-016-N
+    Gender: 0
+    Race: 0
+    Attractiveness: 16
+    Expression: N
+    Sprite: {fileID: 21300000, guid: 09cd5f03f329db34f89eeb4c41d076de, type: 3}
+  - Id: CFD-BM-020-001-N
+    Gender: 0
+    Race: 0
+    Attractiveness: 1
+    Expression: N
+    Sprite: {fileID: 21300000, guid: 1ff562922a699694ebdcc6b8d0d1d8ba, type: 3}
+  - Id: CFD-BM-038-001-N
+    Gender: 0
+    Race: 0
+    Attractiveness: 1
+    Expression: N
+    Sprite: {fileID: 21300000, guid: be933ac1142165945b4467cac9ce7599, type: 3}
+  - Id: CFD-WF-007-001-N
+    Gender: 1
+    Race: 1
+    Attractiveness: 1
+    Expression: N
+    Sprite: {fileID: 21300000, guid: 271bd81b5c7cf404b8cf1cbf3303ecff, type: 3}
+  - Id: CFD-WF-035-024-N
+    Gender: 1
+    Race: 1
+    Attractiveness: 24
+    Expression: N
+    Sprite: {fileID: 21300000, guid: 854fc5e69056de744839552d56e686fa, type: 3}
+  - Id: CFD-WM-001-014-N
+    Gender: 0
+    Race: 1
+    Attractiveness: 14
+    Expression: N
+    Sprite: {fileID: 21300000, guid: 681c8f663f4ce0f408a1b007d2c34de9, type: 3}
+  - Id: CFD-WM-003-002-N
+    Gender: 0
+    Race: 1
+    Attractiveness: 2
+    Expression: N
+    Sprite: {fileID: 21300000, guid: c7207c81ee8226b40b0814571219993d, type: 3}
+  - Id: CFD-WM-010-001-N
+    Gender: 0
+    Race: 1
+    Attractiveness: 1
+    Expression: N
+    Sprite: {fileID: 21300000, guid: 53ae6b25d5d83a24c8e7ad6c8c0ec4bc, type: 3}
+  - Id: CFD-WM-240-125-N
+    Gender: 0
+    Race: 1
+    Attractiveness: 125
+    Expression: N
+    Sprite: {fileID: 21300000, guid: cfc8f41c4bf1ee142a4e0036ca76ec02, type: 3}
+  - Id: CFD-WM-245-123-N
+    Gender: 0
+    Race: 1
+    Attractiveness: 123
+    Expression: N
+    Sprite: {fileID: 21300000, guid: bdfeb83f0fc227442a093299ad04e2ba, type: 3}
