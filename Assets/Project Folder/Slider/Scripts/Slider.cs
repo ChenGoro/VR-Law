@@ -58,6 +58,7 @@ public class Slider : MonoBehaviour
     private const float _posEpsilonSqr = 1e-8f;
 
     private UniTaskCompletionSource tcs;
+    private float _defaultValue;
 
     public event Action sliderWasTouched;
 
@@ -91,6 +92,7 @@ public class Slider : MonoBehaviour
         UpdateCollider();
         UpdateStepMarks();
         SetValue(CurrentValue);
+        _defaultValue = CurrentValue;
 
         if (stepMarkParent == null)
         {
@@ -134,7 +136,7 @@ public class Slider : MonoBehaviour
 #if UNITY_EDITOR
         if (!Application.isPlaying)
         {
-            ScheduleRegenerateStepMarks();   //  queue, don’t destroy in OnValidate
+            ScheduleRegenerateStepMarks();   //  queue, don?t destroy in OnValidate
             return;
         }
 #endif
@@ -441,6 +443,14 @@ public class Slider : MonoBehaviour
     public void SetValue(float newValue)
     {
         ApplyValue(newValue);
+    }
+
+    /// <summary>
+    /// Resets the slider to the initial default value (the value it had at Start).
+    /// </summary>
+    public void Reset()
+    {
+        SetValue(_defaultValue);
     }
 
     public async UniTask<float> WaitForConfirm()

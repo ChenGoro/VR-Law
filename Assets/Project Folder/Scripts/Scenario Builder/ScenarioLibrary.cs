@@ -1,119 +1,144 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine;
-
 
 public class ScenarioLibrary : MonoBehaviour
 {
-    /// <summary>
-    /// scenario templates library. in charge of loading the templates from the csv file and outting them in ScenarioTemplate objects.
-    /// </summary>
-    public List<ScenarioTemplate> Templates { get; private set; }
+    /// <summary>Resources path to the scenarios root (e.g. Scenarios-Feb26). Must contain ScenarioList.txt and one subfolder per scenario.</summary>
+    public string scenariosRoot = "Scenarios-Feb26";
 
-    public string csvFilePath = "scenarios"; // without .csv, in Resources
+    public List<ScenarioTemplate> Templates { get; private set; }
 
     public void Init()
     {
-        Templates = LoadTemplatesFromCSV(csvFilePath);
+        Templates = LoadTemplatesFromFolders(scenariosRoot);
     }
 
     public ScenarioTemplate GetRandomTemplate()
     {
-        if (Templates.Count == 0) return null;
+        if (Templates == null || Templates.Count == 0)
+            throw new InvalidOperationException("[ScenarioLibrary] No templates loaded. Cannot GetRandomTemplate(). Check that scenario folders and ScenarioList.txt exist and load correctly.");
         return Templates[UnityEngine.Random.Range(0, Templates.Count)];
     }
 
-    private List<ScenarioTemplate> LoadTemplatesFromCSV(string resourcePath)
+    private List<ScenarioTemplate> LoadTemplatesFromFolders(string root)
     {
-        List<ScenarioTemplate> templates = new List<ScenarioTemplate>();
+        string listPath = root + "/ScenarioList";
+        TextAsset listAsset = Resources.Load<TextAsset>(listPath);
+        if (listAsset == null)
+            throw new InvalidOperationException($"[ScenarioLibrary] Scenario list not found at Resources/{listPath}. Add ScenarioList.txt that lists scenario folder names (one per line). See ScenarioFolderFormat.md.");
 
-        TextAsset csvData = Resources.Load<TextAsset>(resourcePath);
-        if (csvData == null)
+        string[] folderNames = listAsset.text
+            .Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(s => s.Trim())
+            .Where(s => !string.IsNullOrEmpty(s))
+            .ToArray();
+
+        if (folderNames.Length == 0)
+            throw new InvalidOperationException($"[ScenarioLibrary] ScenarioList at Resources/{listPath} is empty. Add at least one scenario folder name per line.");
+
+        var templates = new List<ScenarioTemplate>();
+        for (int i = 0; i < folderNames.Length; i++)
         {
-            Debug.LogError($"CSV file not found at Resources/{resourcePath}");
-            return templates;
-        }
-
-#if !UNITY_EDITOR
-        SaveCsvCopyToPersistentData(csvData, resourcePath); // Save a copy for Analytics, only in builds
-#endif
-
-        string[] lines = csvData.text.Split(new[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
-
-        // Skip header
-        for (int i = 1; i < lines.Length; i++)
-        {
-            string[] fields = SplitCSVLine(lines[i]);
-
-            if (fields.Length < 5)
-            {
-                Debug.LogWarning($"Skipping malformed line {i + 1}: {lines[i]}");
-                continue;
-            }
-
+            string folder = folderNames[i];
+            string basePath = root + "/" + folder;
             try
             {
-                string desc = fields[0];
-
-                if (!Enum.TryParse(fields[1], out ScenarioType type))
-                    throw new System.Exception($"Invalid ScenarioType value: '{fields[1]}'");
-
-                if (!Enum.TryParse(fields[2], out CrimeType crime))
-                    throw new System.Exception($"Invalid CrimeType value: '{fields[2]}'");
-
-                string prosecutor = fields[3];
-                string attorney = fields[4];
-
-                if (!float.TryParse(fields[5], out float income))
-                    throw new System.Exception($"Invalid AnnualIncome value: '{fields[5]}'");
-
-                templates.Add(new ScenarioTemplate(desc, type, crime, prosecutor, attorney, income, i));
+                ScenarioTemplate t = LoadOneScenario(basePath, folder, i + 1);
+                templates.Add(t);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                Debug.LogError($"Error parsing line {i + 1}: {ex.Message}");
+                throw new InvalidOperationException($"[ScenarioLibrary] Failed to load scenario folder '{folder}' at Resources/{basePath}: {ex.Message}", ex);
             }
-
         }
-        Debug.Log($"[ScenarioLibrary] Loaded {templates.Count} scenario templates from CSV.");
+
+        Debug.Log($"[ScenarioLibrary] Loaded {templates.Count} scenario(s) from folders.");
         return templates;
     }
 
-    private void SaveCsvCopyToPersistentData(TextAsset csvData, string resourcePath)
+    private ScenarioTemplate LoadOneScenario(string basePath, string folderName, int scenarioIndex)
     {
-        try
-        {
-            // Use the last segment of the Resources path as the "original name"
-            // e.g., "configs/scenarios" -> "scenarios"
-            string originalName = Path.GetFileName(resourcePath);
+        string desc = LoadText(basePath, "Description", folderName);
+        string prosecutor = LoadText(basePath, "ProsecutorStatement", folderName);
+        string attorney = LoadText(basePath, "AttorneyStatement", folderName);
 
-            // Unique run id from your TXRDataManager
-            string uid = TXRDataManager.UniqueParticipantId;
+        ScenarioType scenarioType = LoadEnum<ScenarioType>(basePath, "ScenarioType", folderName);
+        CrimeType crimeType = LoadEnum<CrimeType>(basePath, "CrimeType", folderName);
+        float annualIncome = LoadFloat(basePath, "DefendantAnnualIncome", folderName);
 
-            string fileName = $"{uid}_ScenariosCSV_{originalName}.csv";
-            string outPath = Path.Combine(Application.persistentDataPath, fileName);
+        AudioClip descClip = LoadAudio(basePath, "Description", folderName);
+        AudioClip prosecutorClip = LoadAudio(basePath, "ProsecutorStatement", folderName);
+        AudioClip attorneyClip = LoadAudio(basePath, "AttorneyStatement", folderName);
 
-            // Write exact bytes to preserve encoding exactly as in the asset
-            File.WriteAllBytes(outPath, csvData.bytes);
+        string descJson = LoadWordTimesJson(basePath, "Description", folderName);
+        string prosecutorJson = LoadWordTimesJson(basePath, "ProsecutorStatement", folderName);
+        string attorneyJson = LoadWordTimesJson(basePath, "AttorneyStatement", folderName);
 
-            Debug.Log($"[ScenarioLibrary] Saved CSV copy to: {outPath}");
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError($"[ScenarioLibrary] Failed to save CSV copy: {ex.Message}");
-        }
+        var descBlock = new NarrativeBlock(desc, descClip, descJson);
+        var prosecutorBlock = new NarrativeBlock(prosecutor, prosecutorClip, prosecutorJson);
+        var attorneyBlock = new NarrativeBlock(attorney, attorneyClip, attorneyJson);
+
+        return new ScenarioTemplate(
+            description: desc,
+            scenarioType: scenarioType,
+            crimeType: crimeType,
+            prosecutorStatement: prosecutor,
+            attorneyStatement: attorney,
+            descriptionBlock: descBlock,
+            prosecutorBlock: prosecutorBlock,
+            attorneyBlock: attorneyBlock,
+            annualIncome: annualIncome,
+            scnarioIndex: scenarioIndex
+        );
     }
 
-
-    // Handles commas inside quotes
-    private string[] SplitCSVLine(string line)
+    private static string LoadText(string basePath, string name, string folderName)
     {
-        var matches = Regex.Matches(line, @"(?:^|,)(?:""(?<val>(?:[^""]|"""")*)""|(?<val>[^"",]*))");
-        return matches.Cast<Match>()
-                      .Select(m => m.Groups["val"].Value.Replace("\"\"", "\"")) // unescape double quotes
-                      .ToArray();
+        TextAsset a = Resources.Load<TextAsset>(basePath + "/" + name);
+        if (a == null)
+            throw new InvalidOperationException($"Missing required file: {name}.txt in scenario folder '{folderName}'.");
+        return a.text;
+    }
+
+    private static T LoadEnum<T>(string basePath, string name, string folderName) where T : struct
+    {
+        TextAsset a = Resources.Load<TextAsset>(basePath + "/" + name);
+        if (a == null)
+            throw new InvalidOperationException($"Missing required file: {name}.txt in scenario folder '{folderName}'.");
+        string value = a.text.Trim();
+        if (!Enum.TryParse<T>(value, true, out T result))
+            throw new InvalidOperationException($"Invalid {name} value in scenario folder '{folderName}': '{value}'. Expected one of: {string.Join(", ", Enum.GetNames(typeof(T)))}.");
+        return result;
+    }
+
+    private static float LoadFloat(string basePath, string name, string folderName)
+    {
+        TextAsset a = Resources.Load<TextAsset>(basePath + "/" + name);
+        if (a == null)
+            throw new InvalidOperationException($"Missing required file: {name}.txt in scenario folder '{folderName}'.");
+        string value = a.text.Trim();
+        if (!float.TryParse(value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out float result))
+            throw new InvalidOperationException($"Invalid {name} value in scenario folder '{folderName}': '{value}'. Expected a number.");
+        return result;
+    }
+
+    /// <summary>Loads audio if present. Logs an error and returns null when missing (scenario still loads; playback will be text-only).</summary>
+    private static AudioClip LoadAudio(string basePath, string name, string folderName)
+    {
+        AudioClip clip = Resources.Load<AudioClip>(basePath + "/" + name);
+        if (clip == null)
+            Debug.LogError($"[ScenarioLibrary] Missing audio file: {name}.(mp3|wav|ogg) in scenario folder '{folderName}' at Resources/{basePath}. Continuing without audio.");
+        return clip;
+    }
+
+    private static string LoadWordTimesJson(string basePath, string name, string folderName)
+    {
+        string path = basePath + "/" + name + "_wordtimes";
+        TextAsset a = Resources.Load<TextAsset>(path);
+        if (a == null)
+            throw new InvalidOperationException($"Missing required file: {name}_wordtimes.json in scenario folder '{folderName}'.");
+        return a.text;
     }
 }

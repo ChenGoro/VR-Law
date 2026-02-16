@@ -30,6 +30,8 @@ public class TMPBackplateResizer : MonoBehaviour
 
     // Cached last computed bounds for drawing gizmos
     private Bounds lastBounds;
+    public Bounds LastBounds => lastBounds;
+
 
     private void Reset()
     {

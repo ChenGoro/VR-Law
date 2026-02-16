@@ -22,6 +22,7 @@ public class BoxesManager : MonoBehaviour
     private int viewedCount = 0;
     private UniTaskCompletionSource allBoxesViewedTCS;
     private UniTaskCompletionSource ContinuePressedTCS;
+    private Box _currentPlayingStatementBox;
 
     private void Start()
     {
@@ -36,10 +37,32 @@ public class BoxesManager : MonoBehaviour
         DefandantPhoto.sprite = scenario.DefendantPhoto.Sprite;
         VictimPhoto.sprite = scenario.VictimPhoto.Sprite;
 
-        // change order of boxes based on layout order
-        // order is set by the order of children in the hirarchy
         SetBoxesOrder(scenario.LayoutOrder);
 
+        foreach (Box box in boxes)
+            box.LoadScenarioAssets(scenario);
+    }
+
+    public void NotifyStatementBoxShowing(Box box)
+    {
+        if (_currentPlayingStatementBox != null && _currentPlayingStatementBox != box)
+            _currentPlayingStatementBox.StopPlaybackIfStatement();
+        _currentPlayingStatementBox = box;
+    }
+
+    public void NotifyStatementBoxHidden(Box box)
+    {
+        if (_currentPlayingStatementBox == box)
+            _currentPlayingStatementBox = null;
+    }
+
+    private void StopCurrentStatementBox()
+    {
+        if (_currentPlayingStatementBox != null)
+        {
+            _currentPlayingStatementBox.StopPlaybackIfStatement();
+            _currentPlayingStatementBox = null;
+        }
     }
 
     private void SetBoxesOrder(int[] layoutOrder)
@@ -60,6 +83,7 @@ public class BoxesManager : MonoBehaviour
 
     public void Hide()
     {
+        StopCurrentStatementBox();
         gameObject.SetActive(false);
         foreach (var box in boxes)
             box.gameObject.SetActive(false);
@@ -83,8 +107,7 @@ public class BoxesManager : MonoBehaviour
         foreach (Box box in boxes)
         {
             box.gameObject.SetActive(true);
-            box.Init(OnBoxViewed);
-
+            box.Init(OnBoxViewed, this);
         }
 
         ShowContinueInstructionsForSeconds(ContinueInstructionsShowTime).Forget();
@@ -97,7 +120,7 @@ public class BoxesManager : MonoBehaviour
             ContinuePressedTCS = new UniTaskCompletionSource();
             continueButton.VRButtonPressed.AddListener(OnContinuePressed);
             await ContinuePressedTCS.Task;
-            TtsCaller.I.Cancel(); // in case TTS is still speaking, stop it.
+            StopCurrentStatementBox();
             continueButton.VRButtonPressed.RemoveAllListeners();
             Hide();
             viewedCount = 0;

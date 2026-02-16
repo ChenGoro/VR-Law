@@ -22,6 +22,7 @@ public class AmountChooser : MonoBehaviour
     public async UniTask<float> ShowAndWaitForAmount()
     {
         amount = -1; // reset previous value
+        slider.Reset();
         Show();
         amount = await slider.WaitForConfirm();
         Hide();

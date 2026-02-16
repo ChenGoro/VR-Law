@@ -48,6 +48,22 @@ public class KaraokeTextHighlighter : MonoBehaviour
     private string _language;
     private float _durationSeconds;
 
+    /// <summary>Cached start index of each word in _fullText; -1 if not found. Used to preserve tabs/newlines when rebuilding.</summary>
+    private int[] _wordStartIndices;
+    /// <summary>Length of each word's match in _fullText (may be less than word length when JSON has trailing punctuation not in text).</summary>
+    private int[] _wordLengthsInText;
+
+    /// <summary>Spaces used to represent a tab when building display text. TMP often renders \t as 0 width if the font asset has no Tab Width; this makes indents visible.</summary>
+    private const int SpacesPerTab = 4;
+
+    /// <summary>Replace tab characters with spaces so indents are visible in TMP when the font asset has no Tab Width.</summary>
+    private static string ExpandTabs(string segment)
+    {
+        if (string.IsNullOrEmpty(segment) || segment.IndexOf('\t') < 0)
+            return segment;
+        return segment.Replace("\t", new string(' ', SpacesPerTab));
+    }
+
     [Serializable]
     private class WordTimingData
     {
@@ -110,7 +126,9 @@ public class KaraokeTextHighlighter : MonoBehaviour
     /// <summary>
     /// Load the word timing data from a JSON string (as exported from Python).
     /// </summary>
-    public void LoadFromJson(string json)
+    /// <param name="json">JSON string with text, words, wordTimes.</param>
+    /// <param name="debugLabel">Optional label for [DebugDynamicTexts] logs (e.g. "LegalScenario", "AttorneyStatement").</param>
+    public void LoadFromJson(string json, string debugLabel = null)
     {
         if (string.IsNullOrEmpty(json))
         {
@@ -148,6 +166,8 @@ public class KaraokeTextHighlighter : MonoBehaviour
         _language = data.language;
         _durationSeconds = data.duration;
 
+        ComputeWordStartIndices(_fullText, _words, out _wordStartIndices, out _wordLengthsInText);
+
         if (textComponent != null)
         {
             textComponent.text = _fullText;
@@ -159,8 +179,28 @@ public class KaraokeTextHighlighter : MonoBehaviour
         // Initial render with all words in "future" color
         RebuildTextWithHighlight();
 
-        // Optional: debug info
-        // Debug.Log($"[KaraokeTextHighlighter] Loaded {_words.Length} words, language={_language}, duration={_durationSeconds:F2}s");
+        if (ShouldLogDynamicTexts())
+            LogDynamicTextStages(string.IsNullOrEmpty(debugLabel) ? gameObject.name : debugLabel);
+    }
+
+    private static bool ShouldLogDynamicTexts() =>
+        SceneReferencer.Instance != null && SceneReferencer.Instance.DebugLogDynamicTexts;
+
+    private void LogDynamicTextStages(string label)
+    {
+        bool useFull = !string.IsNullOrEmpty(_fullText) && _wordStartIndices != null && _wordLengthsInText != null
+            && _wordStartIndices.Length == _words.Length && _wordLengthsInText.Length == _words.Length
+            && Array.TrueForAll(_wordStartIndices, i => i >= 0) && Array.TrueForAll(_wordLengthsInText, i => i > 0);
+        string finalText = textComponent != null ? textComponent.text : "(no TMP)";
+        Debug.Log($"[DebugDynamicTexts] {label} JSON text ({_fullText?.Length ?? 0} chars). Has \\n: {_fullText?.Contains("\n") ?? false}, Has \\t: {_fullText?.Contains("\t") ?? false}\n{Repr(_fullText)}");
+        Debug.Log($"[DebugDynamicTexts] {label} TIMINGS: words={_words?.Length ?? 0}, duration={_durationSeconds:F2}s, useFullTextLayout={useFull}");
+        Debug.Log($"[DebugDynamicTexts] {label} FINAL TMP ({finalText?.Length ?? 0} chars). Has \\n: {finalText?.Contains("\n") ?? false}, Has \\t: {finalText?.Contains("\t") ?? false}\n{Repr(finalText)}");
+    }
+
+    private static string Repr(string s)
+    {
+        if (s == null) return "(null)";
+        return s.Replace("\r", "\\r").Replace("\n", "\\n").Replace("\t", "\\t");
     }
 
     /// <summary>
@@ -271,48 +311,137 @@ public class KaraokeTextHighlighter : MonoBehaviour
     }
 
     /// <summary>
+    /// Find start index and matched length of each word in fullText. When the JSON word has trailing punctuation not in text (e.g. "victim," vs "victim "), try matching without it so we keep the full-text path and preserve newlines.
+    /// </summary>
+    private static void ComputeWordStartIndices(string fullText, string[] words, out int[] indices, out int[] lengths)
+    {
+        indices = null;
+        lengths = null;
+        if (fullText == null || words == null || words.Length == 0)
+            return;
+
+        indices = new int[words.Length];
+        lengths = new int[words.Length];
+        int searchStart = 0;
+
+        for (int i = 0; i < words.Length; i++)
+        {
+            string word = words[i];
+            if (string.IsNullOrEmpty(word))
+            {
+                indices[i] = -1;
+                continue;
+            }
+
+            int idx = fullText.IndexOf(word, searchStart, StringComparison.Ordinal);
+            int len = word.Length;
+            if (idx < 0)
+            {
+                string trimmed = TrimTrailingPunctuation(word);
+                if (trimmed.Length > 0)
+                    idx = fullText.IndexOf(trimmed, searchStart, StringComparison.Ordinal);
+                if (idx >= 0)
+                    len = trimmed.Length;
+            }
+            if (idx < 0)
+            {
+                indices[i] = -1;
+                continue;
+            }
+
+            indices[i] = idx;
+            lengths[i] = len;
+            searchStart = idx + len;
+        }
+    }
+
+    private static string TrimTrailingPunctuation(string w)
+    {
+        if (string.IsNullOrEmpty(w)) return w;
+        int n = w.Length;
+        while (n > 0 && char.IsPunctuation(w[n - 1]))
+            n--;
+        return n == w.Length ? w : w.Substring(0, n);
+    }
+
+    /// <summary>
     /// Rebuild the TMP text string with rich text color tags
-    /// for past/current/future words.
+    /// for past/current/future words. Preserves tabs/newlines from _fullText when positions are available.
     /// </summary>
     private void RebuildTextWithHighlight()
     {
         if (textComponent == null || _words == null || _words.Length == 0)
             return;
 
-        var sb = new StringBuilder();
-
         string pastHex = ColorUtility.ToHtmlStringRGB(pastColor);
         string currentHex = ColorUtility.ToHtmlStringRGB(currentColor);
         string futureHex = ColorUtility.ToHtmlStringRGB(futureColor);
 
-        for (int i = 0; i < _words.Length; i++)
+        bool useFullTextLayout = !string.IsNullOrEmpty(_fullText) && _wordStartIndices != null && _wordLengthsInText != null
+            && _wordStartIndices.Length == _words.Length && _wordLengthsInText.Length == _words.Length;
+        for (int i = 0; useFullTextLayout && i < _wordStartIndices.Length; i++)
         {
-            if (i > 0)
-                sb.Append(" ");
+            if (_wordStartIndices[i] < 0 || _wordLengthsInText[i] <= 0)
+            {
+                useFullTextLayout = false;
+                break;
+            }
+        }
 
-            string colorHex;
+        var sb = new StringBuilder();
 
-            if (_currentWordIndex < 0)
+        if (useFullTextLayout)
+        {
+            int prevEnd = 0;
+            for (int i = 0; i < _words.Length; i++)
             {
-                // No current word yet: everything is "future"
-                colorHex = futureHex;
-            }
-            else if (i < _currentWordIndex)
-            {
-                colorHex = pastHex;
-            }
-            else if (i == _currentWordIndex)
-            {
-                colorHex = currentHex;
-            }
-            else
-            {
-                colorHex = futureHex;
+                int start = _wordStartIndices[i];
+                int wordLen = _wordLengthsInText[i];
+                int end = start + wordLen;
+
+                sb.Append(ExpandTabs(_fullText.Substring(prevEnd, start - prevEnd)));
+
+                string colorHex;
+                if (_currentWordIndex < 0)
+                    colorHex = futureHex;
+                else if (i < _currentWordIndex)
+                    colorHex = pastHex;
+                else if (i == _currentWordIndex)
+                    colorHex = currentHex;
+                else
+                    colorHex = futureHex;
+
+                sb.Append("<color=#").Append(colorHex).Append(">");
+                sb.Append(_words[i]);
+                sb.Append("</color>");
+
+                prevEnd = end;
             }
 
-            sb.Append("<color=#").Append(colorHex).Append(">");
-            sb.Append(_words[i]);
-            sb.Append("</color>");
+            if (prevEnd < _fullText.Length)
+                sb.Append(ExpandTabs(_fullText.Substring(prevEnd)));
+        }
+        else
+        {
+            for (int i = 0; i < _words.Length; i++)
+            {
+                if (i > 0)
+                    sb.Append(" ");
+
+                string colorHex;
+                if (_currentWordIndex < 0)
+                    colorHex = futureHex;
+                else if (i < _currentWordIndex)
+                    colorHex = pastHex;
+                else if (i == _currentWordIndex)
+                    colorHex = currentHex;
+                else
+                    colorHex = futureHex;
+
+                sb.Append("<color=#").Append(colorHex).Append(">");
+                sb.Append(_words[i]);
+                sb.Append("</color>");
+            }
         }
 
         textComponent.text = sb.ToString();

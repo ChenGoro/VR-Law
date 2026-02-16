@@ -1,0 +1,75 @@
+{
+  "audio_file": "Description.mp3",
+  "language": "en",
+  "duration": 10.6840625,
+  "text": " \n\tJohn Doe has been charged with rape following allegations that he sexually assaulted an acquaintance after a party. \n\tDoe’s annual income is $82,000.",
+  "words": [
+    "John",
+    "Doe",
+    "has",
+    "been",
+    "charged",
+    "with",
+    "rape",
+    "following",
+    "allegations",
+    "that",
+    "he",
+    "sexually",
+    "assaulted",
+    "an",
+    "acquaintance",
+    "after",
+    "a",
+    "party.",
+    "Doe's",
+    "annual",
+    "income",
+    "is",
+    "$82",
+    ",000."
+  ],
+  "wordTimes": [
+    0.0,
+    0.3,
+    0.66,
+    0.82,
+    1.02,
+    1.38,
+    1.66,
+    2.08,
+    2.52,
+    3.2,
+    3.54,
+    3.68,
+    4.1,
+    4.66,
+    4.98,
+    5.6,
+    5.88,
+    6.06,
+    7.4399999999999995,
+    7.8,
+    8.1,
+    8.66,
+    9.0,
+    9.46
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 4.98,
+      "text": "John Doe has been charged with rape following allegations that he sexually assaulted an"
+    },
+    {
+      "start": 4.98,
+      "end": 6.42,
+      "text": "acquaintance after a party."
+    },
+    {
+      "start": 7.6000000000000005,
+      "end": 10.12,
+      "text": "Doe's annual income is $82,000."
+    }
+  ]
+}
