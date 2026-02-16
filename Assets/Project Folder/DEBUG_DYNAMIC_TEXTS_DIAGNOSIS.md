@@ -20,9 +20,9 @@ When `useFullTextLayout=True`, the highlighter uses the full `text` and only wra
 
 | Scenario | LOADED     | JSON text  | useFullTextLayout | FINAL TMP    | Problem |
 |----------|------------|------------|-------------------|--------------|---------|
-| 01 (convenience store) | \n \t | \n \t | **False** | No \n, no \t | Newlines and tabs lost |
-| 02 (deli)              | \n \t | \n \t | **False** | No \n, no \t | Newlines and tabs lost |
-| 04 (rape)              | \n \t | \n \t | **False** | No \n, no \t | Newlines and tabs lost |
+| 01 (499 chars, convenience store) | \n \t | \n \t | **False** | No \n, no \t | Newlines and tabs lost |
+| 03 (655 chars, deli / "gut punch") | \n \t | \n \t | **False** | No \n, no \t | Newlines and tabs lost |
+| 02, 04 (from earlier runs)         | \n \t | \n \t | **False** | No \n, no \t | Same pattern |
 
 **Conclusion:** For **LegalScenario (Description)** the word list in the wordtimes JSON does not match the `text` exactly (e.g. comma in `"victim,"` in `words` vs `"victim "` or `"victim"` in `text`). So every Description block hits the fallback and loses formatting.
 
@@ -34,9 +34,9 @@ When `useFullTextLayout=True`, the highlighter uses the full `text` and only wra
 
 | Scenario / run | LOADED | JSON text | useFullTextLayout | FINAL TMP   | Problem |
 |----------------|--------|-----------|-------------------|-------------|---------|
-| 02 (261 chars) | \n \t  | \n \t     | **True**          | \n kept, \t→spaces | OK |
-| 01 (239 chars) | \n \t  | \n \t     | **False**         | No \n, no \t | Newlines and tabs lost |
-| 04 (326 chars) | \n \t  | \n \t     | **True**          | \n kept     | OK |
+| 01 (239 chars, "part-time" etc.) | \n \t | \n \t | **False** | No \n, no \t | Newlines and tabs lost |
+| 03 (261 chars, "older brother", warehouse) | \n \t | \n \t | **True** | \n kept, \t→spaces | OK |
+| 02, 04 (from earlier runs) | \n \t | \n \t | mixed | see summary table | Same pattern |
 
 **Conclusion:** When AttorneyStatement wordtimes have a single word that doesn’t match `text` (e.g. punctuation or tokenization difference), `useFullTextLayout` becomes False and that scenario’s attorney statement loses newlines/tabs.
 
@@ -46,9 +46,9 @@ When `useFullTextLayout=True`, the highlighter uses the full `text` and only wra
 
 | Scenario / run | LOADED | JSON text | useFullTextLayout | FINAL TMP   | Problem |
 |----------------|--------|-----------|-------------------|-------------|---------|
-| 02 (209 chars) | \n \t  | \n \t     | **False**         | No \n, no \t | Lost |
-| 04 (304 chars) | \n \t  | \n \t     | **False**         | No \n, no \t | Lost |
-| 01 (249 chars) | \n \t  | \n \t     | **True**          | \n kept     | OK |
+| 01 (249 chars, iPhone, Starbucks) | \n \t | \n \t | **True** | \n kept, \t→spaces | OK |
+| 03 (304 chars, laptop, library)   | \n \t | \n \t | **False** | No \n, no \t | Newlines and tabs lost |
+| 02, 04 (from earlier runs)         | \n \t | \n \t | **False** | No \n, no \t | Same pattern |
 
 Same pattern as AttorneyStatement: one mismatched word in the JSON causes fallback and loss of formatting.
 
@@ -73,18 +73,39 @@ From the FINAL TMP strings in the logs:
 
 ## 6. Summary table – “did this block keep newlines?”
 
-| Block              | Scenario 01   | Scenario 02   | Scenario 03        | Scenario 04   |
-|--------------------|---------------|---------------|-------------------|---------------|
-| LegalScenario      | No (False)    | No (False)    | *(not in run)*    | No (False)    |
-| AttorneyStatement  | No (False)    | Yes (True)    | *(not in run)*    | Yes (True)    |
-| ProsecutorStatement| Yes (True)    | No (False)    | *(not in run)*    | No (False)    |
+| Block              | Scenario 01   | Scenario 02   | Scenario 03   | Scenario 04   |
+|--------------------|---------------|---------------|---------------|---------------|
+| LegalScenario      | No (False)    | No (False)    | No (False)    | No (False)    |
+| AttorneyStatement  | No (False)    | Yes (True)    | Yes (True)    | Yes (True)    |
+| ProsecutorStatement| Yes (True)    | No (False)    | No (False)    | No (False)    |
 
-Scenario 03 was not played in the captured debug run, so its useFullTextLayout/FINAL state is unknown. Run with scenario 03 and enable DebugLogDynamicTexts to fill this in.
+*Scenario 03 filled from latest log (deli, 655 chars description; 261/304 chars statements).*
 
 **Texts that did not load spaces and newlines (FINAL has no \n):**  
-All LegalScenario descriptions in the sampled runs; AttorneyStatement when useFullTextLayout=False (e.g. scenario 01); ProsecutorStatement when useFullTextLayout=False (e.g. scenarios 02 and 04).
+All LegalScenario descriptions; AttorneyStatement when useFullTextLayout=False (scenario 01); ProsecutorStatement when useFullTextLayout=False (scenarios 02, 03, 04).
 
 **Punctuation/number issues:**  
 - Extra space in numbers (e.g. `$82 ,000.`) when word list has separate tokens.  
 - Possible space before hyphen in “break -in” when using fallback path.  
 - Fix by aligning wordtimes `words` with `text` (and tokenization) so `useFullTextLayout=True` more often, and by merging number/currency tokens in the word list.
+
+---
+
+## 7. Where exactly are the problems? (General summary)
+
+**1. KaraokeTextHighlighter (code)**  
+- **File:** `Assets/Project Folder/KaraokeHighlight/KaraokeTextHighlighter.cs`  
+- **What happens:** When the highlighter loads wordtimes JSON, it tries to match each entry in the `words` array to the full `text` string. If **any** word fails to match (e.g. different punctuation, split token like `"$15"` and `",000."`), it sets `useFullTextLayout=False` and builds the displayed string by **joining the word list with spaces only**. That path never inserts newlines or tabs, so all paragraph breaks and indentation are lost.  
+- **Where the decision is made:** Inside `LoadFromJson` / the logic that sets `useFullTextLayout` and the subsequent `RebuildTextWithHighlight()` path (word-based vs text-based).
+
+**2. Wordtimes JSON data (content)**  
+- **Location:** `Assets/Resources/Scenarios-Feb26/<01|02|03|04>/Description_wordtimes.json`, `AttorneyStatement_wordtimes.json`, `ProsecutorStatement_wordtimes.json`.  
+- **What's wrong:** The `words` array often does not match the exact substrings in `text`: e.g. trailing comma in `words` vs none in `text`, or numbers/currency split into multiple tokens (`"$15"`, `",000."`). Those mismatches force the highlighter into the fallback path.  
+- **Which blocks are affected:**  
+  - **Description (LegalScenario):** Every scenario in the sampled runs; mismatch is consistent (e.g. punctuation or tokenization).  
+  - **AttorneyStatement:** Scenario 01 loses newlines (useFullTextLayout=False); 02, 03, 04 keep them when useFullTextLayout=True.  
+  - **ProsecutorStatement:** Scenarios 02, 03, 04 lose newlines; scenario 01 keeps them.
+
+**3. Resulting UX problems**  
+- **On screen:** Description text and some statement boxes show as one long line instead of indented paragraphs; numbers can appear as `$15 ,000.`; hyphenated words can show as `break -in` or `part -time`.  
+- **Root cause in one line:** Word–text mismatch in wordtimes JSON → fallback to space-only concatenation → no newlines/tabs and awkward spacing around numbers and hyphens.

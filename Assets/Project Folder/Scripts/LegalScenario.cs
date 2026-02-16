@@ -105,6 +105,6 @@ public class LegalScenario : MonoBehaviour
         float deltaY = targetBottomY - currentBottomWorldY;
 
         scenarioText.transform.position += new Vector3(0f, deltaY, 0f);
-        backfaceTransform.position += new Vector3(0f, deltaY, 0f);
+        // no need to move backfaceTransform, it's a child of scenarioText
     }
 }
