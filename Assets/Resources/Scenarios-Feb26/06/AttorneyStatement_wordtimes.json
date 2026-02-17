@@ -1,0 +1,64 @@
+{
+  "audio_file": "AttorneyStatement.mp3",
+  "language": "en",
+  "duration": 7.601625,
+  "text": " \nDoe has a steady job. \nHe expressed remorse and is committed to return the money that he stole. \nLeniency is warranted.\n\nRape",
+  "words": [
+    "Doe",
+    "has",
+    "a",
+    "steady",
+    "job.",
+    "He",
+    "expressed",
+    "remorse",
+    "and",
+    "is",
+    "committed",
+    "to",
+    "return",
+    "the",
+    "money",
+    "that",
+    "he",
+    "stole.",
+    "Leniency",
+    "is",
+    "warranted."
+  ],
+  "wordTimes": [
+    0.0,
+    0.42,
+    0.56,
+    0.68,
+    0.9,
+    1.78,
+    1.9,
+    2.26,
+    2.92,
+    3.16,
+    3.28,
+    3.58,
+    3.82,
+    4.14,
+    4.28,
+    4.52,
+    4.74,
+    4.86,
+    5.76,
+    6.3,
+    6.5
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 5.2,
+      "text": "Doe has a steady job. He expressed remorse and is committed to return the money that he stole."
+    },
+    {
+      "start": 5.76,
+      "end": 7.08,
+      "text": "Lineancy is warranted."
+    }
+  ]
+}

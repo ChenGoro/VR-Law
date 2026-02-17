@@ -1,0 +1,68 @@
+{
+  "audio_file": "AttorneyStatement.mp3",
+  "language": "en",
+  "duration": 10.161625,
+  "text": " \nConsidering Doe's unblemished criminal record, steady employment, and strong family support, we respectfully request a lesser sentence that reflects his potential for rehabilitation.",
+  "words": [
+    "Considering",
+    "Doe's",
+    "unblemished",
+    "criminal",
+    "record,",
+    "steady",
+    "employment",
+    "and",
+    "strong",
+    "family",
+    "support,",
+    "we",
+    "respectfully",
+    "request",
+    "a",
+    "lesser",
+    "sentence",
+    "that",
+    "reflects",
+    "his",
+    "potential",
+    "for",
+    "rehabilitation."
+  ],
+  "wordTimes": [
+    0.0,
+    0.44,
+    0.9,
+    1.54,
+    1.84,
+    2.6,
+    2.8,
+    3.26,
+    3.64,
+    3.94,
+    4.34,
+    5.1,
+    5.22,
+    5.74,
+    6.34,
+    6.54,
+    6.72,
+    7.26,
+    7.5,
+    7.86,
+    8.12,
+    8.62,
+    8.84
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 4.78,
+      "text": "Considering Doe's unblemished criminal record, steady employment and strong family support,"
+    },
+    {
+      "start": 5.1,
+      "end": 9.42,
+      "text": "we respectfully request a lesser sentence that reflects his potential for rehabilitation."
+    }
+  ]
+}

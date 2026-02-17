@@ -1181,6 +1181,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3630030078948328065, guid: 5ebad9bfbcb2117469c3531381ad3194,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 3.35
+      objectReference: {fileID: 0}
     - target: {fileID: 4892174798880856042, guid: 5ebad9bfbcb2117469c3531381ad3194,
         type: 3}
       propertyPath: m_Name
@@ -1198,13 +1203,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7885299345199770552, guid: 5ebad9bfbcb2117469c3531381ad3194,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5.2507043
+      objectReference: {fileID: 0}
+    - target: {fileID: 7885299345199770552, guid: 5ebad9bfbcb2117469c3531381ad3194,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.9450946
+      objectReference: {fileID: 0}
+    - target: {fileID: 7885299345199770552, guid: 5ebad9bfbcb2117469c3531381ad3194,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.001676321
+      value: 0.000039577484
       objectReference: {fileID: 0}
     - target: {fileID: 7885299345199770552, guid: 5ebad9bfbcb2117469c3531381ad3194,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0010485053
+      value: 0.0011715889
+      objectReference: {fileID: 0}
+    - target: {fileID: 9108064393460267976, guid: 5ebad9bfbcb2117469c3531381ad3194,
+        type: 3}
+      propertyPath: m_text
+      value: "John Doe was arrested and charged with burglary for allegedly breaking
+        into a convenience store at night when the store was closed, using a stone
+        to smash a side window.\n    The store owner who has run the store for over
+        30 years reported that several hundred dollars were taken from the cash register.
+        He described the break-in as 'devastating', not just financially but emotionally,
+        as the store is both his livelihood and a cornerstone of the neighborhood.
+        \n    Doe\u2019s annual income is $82,000"
+      objectReference: {fileID: 0}
+    - target: {fileID: 9108064393460267976, guid: 5ebad9bfbcb2117469c3531381ad3194,
+        type: 3}
+      propertyPath: m_paragraphSpacing
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 9108064393460267976, guid: 5ebad9bfbcb2117469c3531381ad3194,
         type: 3}
@@ -2072,162 +2103,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!1001 &1164245821
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 2051723415}
-    m_Modifications:
-    - target: {fileID: 2100854018869461004, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: VRButtonPressed.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2100854018869461004, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: VRButtonPressed.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2100854018869461004, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: VRButtonPressed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2100854018869461004, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: VRButtonPressed.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2100854018869461004, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: VRButtonPressed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Speak
-      objectReference: {fileID: 0}
-    - target: {fileID: 2100854018869461004, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: VRButtonPressed.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TtsDemo, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 2100854018869461004, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: VRButtonPressed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.457
-      objectReference: {fileID: 0}
-    - target: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.037
-      objectReference: {fileID: 0}
-    - target: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.142
-      objectReference: {fileID: 0}
-    - target: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.867796
-      objectReference: {fileID: 0}
-    - target: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.49692062
-      objectReference: {fileID: 0}
-    - target: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 59.593
-      objectReference: {fileID: 0}
-    - target: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7551103224321484188, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 286a427210ac2414582e1a74d7290d2f, type: 2}
-    - target: {fileID: 7723606487418235047, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_text
-      value: 'TTS
-
-        test'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7723606487418235047, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7723606487418235047, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_fontSizeBase
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8447741120309508209, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_Name
-      value: VR Button
-      objectReference: {fileID: 0}
-    - target: {fileID: 8447741120309508209, guid: 96248df850574fd4b9e53810e9979a45,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 96248df850574fd4b9e53810e9979a45, type: 3}
---- !u!4 &1164245822 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4989718378928432998, guid: 96248df850574fd4b9e53810e9979a45,
-    type: 3}
-  m_PrefabInstance: {fileID: 1164245821}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1191100850 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 85104990933775489, guid: 1421abe72c7da954195272352144ea78,
@@ -3099,7 +2974,7 @@ PrefabInstance:
     - target: {fileID: 612552674921322229, guid: 56cb0481d0a95af4a8059ec0bd4b07c5,
         type: 3}
       propertyPath: debugLogDynamicTexts
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 612552674921322229, guid: 56cb0481d0a95af4a8059ec0bd4b07c5,
         type: 3}
@@ -3732,151 +3607,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2015520330}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &2051723414
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2051723415}
-  - component: {fileID: 2051723417}
-  - component: {fileID: 2051723416}
-  m_Layer: 0
-  m_Name: TTS
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &2051723415
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2051723414}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02, y: 0.867, z: 0.45}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1164245822}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &2051723416
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2051723414}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1.812838
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 1
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!114 &2051723417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2051723414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37d074f21c1a65d4ba170263fea637fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultVoiceId: en_US-joe-medium
-  defaultVolume: 1
 --- !u!1001 &2064571854
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3935,10 +3665,48 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1242645344938179907, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5455371
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242645344938179907, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5458455
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242645344938179907, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.019911468
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242645344938179907, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0014308393
+      objectReference: {fileID: 0}
+    - target: {fileID: 1353169308043071206, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_text
+      value: "Doe has a stable residence, lives locally with family, and is employed
+        part-time.\n    Given Doe\u2019s stable living arrangements, strong family
+        support, and employment status, he will attend all court appearances and
+        poses minimal flight risk.\n    Doe should be released on bail."
+      objectReference: {fileID: 0}
+    - target: {fileID: 1353169308043071206, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_paragraphSpacing
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1353169308043071206, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1705792387294659546, guid: d7c193c276ca653428c77dc001a52ada,
         type: 3}
       propertyPath: boxButtonOffset
-      value: 0.18
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 1741889627329219797, guid: d7c193c276ca653428c77dc001a52ada,
         type: 3}
@@ -3953,17 +3721,45 @@ PrefabInstance:
     - target: {fileID: 2099768278281358083, guid: d7c193c276ca653428c77dc001a52ada,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.430041
+      value: 1.5637684
       objectReference: {fileID: 0}
     - target: {fileID: 2099768278281358083, guid: d7c193c276ca653428c77dc001a52ada,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.1152325
+      value: 1.3798745
+      objectReference: {fileID: 0}
+    - target: {fileID: 2099768278281358083, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.012936562
+      objectReference: {fileID: 0}
+    - target: {fileID: 2099768278281358083, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0014308393
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113955785577874808, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_text
+      value: "Doe has a prior misdemeanor conviction for theft from two years ago.\n   
+        Due to the nature of the current charge and previous criminal record, Doe
+        poses a risk of re-offending and flight.\n    He should not be released on
+        bail."
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113955785577874808, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_paragraphSpacing
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113955785577874808, guid: d7c193c276ca653428c77dc001a52ada,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4891685194564374515, guid: d7c193c276ca653428c77dc001a52ada,
         type: 3}
       propertyPath: boxButtonOffset
-      value: 0.18
+      value: 0.17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24386,6 +24182,5 @@ SceneRoots:
   - {fileID: 1930651605286045249}
   - {fileID: 671071010}
   - {fileID: 5928355734707538071}
-  - {fileID: 2051723415}
   - {fileID: 8560498557730323968}
   - {fileID: 1929898209131914549}

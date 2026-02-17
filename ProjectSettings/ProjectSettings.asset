@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Slab
-  productName: VR-Law-16Feb26
+  productName: VR-Law-17Feb26
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.12156863, g: 0.12156863, b: 0.1254902, a: 1}
@@ -164,7 +164,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.4
   androidMinAspectRatio: 1
   applicationIdentifier:
-    Android: com.Slab.VRLaw16Feb26
+    Android: com.Slab.VRLaw17Feb26
   buildNumber:
     Standalone: 0
     VisionOS: 0

@@ -179,6 +179,12 @@ public class KaraokeTextHighlighter : MonoBehaviour
         // Initial render with all words in "future" color
         RebuildTextWithHighlight();
 
+        bool useFull = !string.IsNullOrEmpty(_fullText) && _wordStartIndices != null && _wordLengthsInText != null
+            && _wordStartIndices.Length == _words.Length && _wordLengthsInText.Length == _words.Length
+            && Array.TrueForAll(_wordStartIndices, i => i >= 0) && Array.TrueForAll(_wordLengthsInText, i => i > 0);
+        if (!useFull && _words != null && _words.Length > 0)
+            Debug.LogWarning($"[KaraokeTextHighlighter] useFullTextLayout=False for {name}: some words did not match text. Newlines/tabs may be lost. Check wordtimes JSON so 'words' appear in 'text' in order.");
+
         if (ShouldLogDynamicTexts())
             LogDynamicTextStages(string.IsNullOrEmpty(debugLabel) ? gameObject.name : debugLabel);
     }
@@ -311,7 +317,7 @@ public class KaraokeTextHighlighter : MonoBehaviour
     }
 
     /// <summary>
-    /// Find start index and matched length of each word in fullText. When the JSON word has trailing punctuation not in text (e.g. "victim," vs "victim "), try matching without it so we keep the full-text path and preserve newlines.
+    /// Find start index and matched length of each word in fullText. Tries exact match, trailing/leading punctuation trim, then case-insensitive so more blocks use full-text layout and fallback can still use separators from text.
     /// </summary>
     private static void ComputeWordStartIndices(string fullText, string[] words, out int[] indices, out int[] lengths)
     {
@@ -335,14 +341,44 @@ public class KaraokeTextHighlighter : MonoBehaviour
 
             int idx = fullText.IndexOf(word, searchStart, StringComparison.Ordinal);
             int len = word.Length;
+
             if (idx < 0)
             {
                 string trimmed = TrimTrailingPunctuation(word);
                 if (trimmed.Length > 0)
+                {
                     idx = fullText.IndexOf(trimmed, searchStart, StringComparison.Ordinal);
-                if (idx >= 0)
-                    len = trimmed.Length;
+                    if (idx >= 0) len = trimmed.Length;
+                }
             }
+            if (idx < 0)
+            {
+                string leadTrimmed = TrimLeadingPunctuation(word);
+                if (leadTrimmed.Length > 0)
+                {
+                    idx = fullText.IndexOf(leadTrimmed, searchStart, StringComparison.Ordinal);
+                    if (idx >= 0) len = leadTrimmed.Length;
+                }
+            }
+            if (idx < 0)
+            {
+                string bothTrimmed = TrimLeadingPunctuation(TrimTrailingPunctuation(word));
+                if (bothTrimmed.Length > 0)
+                {
+                    idx = fullText.IndexOf(bothTrimmed, searchStart, StringComparison.Ordinal);
+                    if (idx >= 0) len = bothTrimmed.Length;
+                }
+            }
+            if (idx < 0)
+            {
+                string toTry = TrimTrailingPunctuation(TrimLeadingPunctuation(word));
+                if (toTry.Length > 0)
+                {
+                    idx = fullText.IndexOf(toTry, searchStart, StringComparison.OrdinalIgnoreCase);
+                    if (idx >= 0) len = toTry.Length;
+                }
+            }
+
             if (idx < 0)
             {
                 indices[i] = -1;
@@ -355,6 +391,15 @@ public class KaraokeTextHighlighter : MonoBehaviour
         }
     }
 
+    private static string TrimLeadingPunctuation(string w)
+    {
+        if (string.IsNullOrEmpty(w)) return w;
+        int start = 0;
+        while (start < w.Length && char.IsPunctuation(w[start]))
+            start++;
+        return start == 0 ? w : w.Substring(start);
+    }
+
     private static string TrimTrailingPunctuation(string w)
     {
         if (string.IsNullOrEmpty(w)) return w;
@@ -362,6 +407,20 @@ public class KaraokeTextHighlighter : MonoBehaviour
         while (n > 0 && char.IsPunctuation(w[n - 1]))
             n--;
         return n == w.Length ? w : w.Substring(0, n);
+    }
+
+    /// <summary>When fallback path must use a space between two tokens, suppress it for number/currency and hyphenated words to avoid "$15 ,000." and "break -in".</summary>
+    private static string GetFallbackSeparator(string prevWord, string nextWord)
+    {
+        if (string.IsNullOrEmpty(prevWord) || string.IsNullOrEmpty(nextWord)) return " ";
+        bool noSpace = false;
+        char lastPrev = prevWord[prevWord.Length - 1];
+        char firstNext = nextWord[0];
+        if ((lastPrev == '$' || char.IsDigit(lastPrev)) && (firstNext == ',' || firstNext == '.'))
+            noSpace = true;
+        if (char.IsLetter(lastPrev) && nextWord.StartsWith("-"))
+            noSpace = true;
+        return noSpace ? "" : " ";
     }
 
     /// <summary>
@@ -426,7 +485,20 @@ public class KaraokeTextHighlighter : MonoBehaviour
             for (int i = 0; i < _words.Length; i++)
             {
                 if (i > 0)
-                    sb.Append(" ");
+                {
+                    int prevEnd = (_wordStartIndices != null && i - 1 < _wordStartIndices.Length && _wordLengthsInText != null && i - 1 < _wordLengthsInText.Length
+                        && _wordStartIndices[i - 1] >= 0 && _wordLengthsInText[i - 1] > 0)
+                        ? _wordStartIndices[i - 1] + _wordLengthsInText[i - 1] : -1;
+                    int nextStart = (_wordStartIndices != null && i < _wordStartIndices.Length && _wordStartIndices[i] >= 0) ? _wordStartIndices[i] : -1;
+                    if (prevEnd >= 0 && nextStart >= 0 && prevEnd <= nextStart && !string.IsNullOrEmpty(_fullText) && nextStart <= _fullText.Length)
+                    {
+                        sb.Append(ExpandTabs(_fullText.Substring(prevEnd, nextStart - prevEnd)));
+                    }
+                    else
+                    {
+                        sb.Append(GetFallbackSeparator(_words[i - 1], _words[i]));
+                    }
+                }
 
                 string colorHex;
                 if (_currentWordIndex < 0)

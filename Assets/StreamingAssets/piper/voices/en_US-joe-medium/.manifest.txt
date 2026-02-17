@@ -1,2 +1,0 @@
-en_US-joe-medium.onnx
-en_US-joe-medium.onnx.json

@@ -2,6 +2,8 @@
 
 Summary of `[DebugDynamicTexts]` logs: which texts lose newlines/tabs, and where punctuation/numbers get extra spaces.
 
+**Fix applied (code + data):** KaraokeTextHighlighter now uses robust matching (leading/trailing punctuation trim, case-insensitive fallback) and a fallback path that preserves newlines/tabs from `_fullText` when possible; optional spacing rule avoids `$15 ,000.` and `break -in`. All 12 scenario wordtimes JSONs were updated (merged split tokens like `break`+`-in`, `$15`+`,000.`, fixed case e.g. DOE→Doe). Re-run with DebugLogDynamicTexts to confirm TIMINGS show `useFullTextLayout=True` and FINAL has `Has \n: True` where expected.
+
 ---
 
 ## 1. Root cause: `useFullTextLayout=False`
