@@ -1,0 +1,83 @@
+{
+  "audio_file": "Description.mp3",
+  "language": "en",
+  "duration": 12.2775625,
+  "text": "John Doe has been charged with murder after allegedly shooting a longtime neighbor during an argument that escalated outside their apartment complex. Doe's annual income is $82,000.",
+  "words": [
+    "John",
+    "Doe",
+    "has",
+    "been",
+    "charged",
+    "with",
+    "murder",
+    "after",
+    "allegedly",
+    "shooting",
+    "a",
+    "longtime",
+    "neighbor",
+    "during",
+    "an",
+    "argument",
+    "that",
+    "escalated",
+    "outside",
+    "their",
+    "apartment",
+    "complex.",
+    "Doe's",
+    "annual",
+    "income",
+    "is",
+    "$82",
+    ",000."
+  ],
+  "wordTimes": [
+    0.0,
+    0.3,
+    0.66,
+    0.8,
+    1.0,
+    1.34,
+    1.62,
+    1.98,
+    2.46,
+    2.92,
+    3.36,
+    3.56,
+    3.88,
+    4.42,
+    4.76,
+    4.94,
+    5.36,
+    5.76,
+    6.4,
+    6.78,
+    7.12,
+    7.48,
+    8.84,
+    9.54,
+    9.84,
+    10.34,
+    10.66,
+    11.06
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 4.76,
+      "text": "John Doe has been charged with murder after allegedly shooting a longtime neighbor during"
+    },
+    {
+      "start": 4.76,
+      "end": 8.08,
+      "text": "an argument that escalated outside their apartment complex."
+    },
+    {
+      "start": 8.84,
+      "end": 11.66,
+      "text": "Doe's annual income is $82,000."
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "audio_file": "Description.mp3",
+  "language": "en",
+  "duration": 8.90775,
+  "text": "John Doe was convicted of murder after a jury concluded that he shot a longtime neighbor during an argument that escalated outside their apartment complex.",
+  "words": [
+    "John",
+    "Doe",
+    "was",
+    "convicted",
+    "of",
+    "murder",
+    "after",
+    "a",
+    "jury",
+    "concluded",
+    "that",
+    "he",
+    "shot",
+    "a",
+    "longtime",
+    "neighbor",
+    "during",
+    "an",
+    "argument",
+    "that",
+    "escalated",
+    "outside",
+    "their",
+    "apartment",
+    "complex."
+  ],
+  "wordTimes": [
+    0.0,
+    0.3,
+    0.68,
+    0.8,
+    1.26,
+    1.48,
+    1.78,
+    2.24,
+    2.42,
+    2.68,
+    3.16,
+    3.52,
+    3.66,
+    3.94,
+    4.12,
+    4.38,
+    4.94,
+    5.3,
+    5.48,
+    5.88,
+    6.5,
+    7.1,
+    7.4,
+    7.74,
+    8.08
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 4.94,
+      "text": "John Doe was convicted of murder after a jury concluded that he shot a longtime neighbor"
+    },
+    {
+      "start": 4.94,
+      "end": 8.5,
+      "text": "during an argument that escalated outside their apartment complex."
+    }
+  ]
+}

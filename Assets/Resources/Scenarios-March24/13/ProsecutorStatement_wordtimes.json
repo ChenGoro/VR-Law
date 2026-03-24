@@ -1,0 +1,75 @@
+{
+  "audio_file": "ProsecutorStatement.mp3",
+  "language": "en",
+  "duration": 9.01225,
+  "text": "The defendant inflicted severe psychological harm. The prosecution urges the court to impose a long prison sentence to protect the community and deliver justice.",
+  "words": [
+    "The",
+    "defendant",
+    "inflicted",
+    "severe",
+    "psychological",
+    "harm.",
+    "The",
+    "prosecution",
+    "urges",
+    "the",
+    "court",
+    "to",
+    "impose",
+    "a",
+    "long",
+    "prison",
+    "sentence",
+    "to",
+    "protect",
+    "the",
+    "community",
+    "and",
+    "deliver",
+    "justice."
+  ],
+  "wordTimes": [
+    0.0,
+    0.16,
+    0.44,
+    1.02,
+    1.4,
+    1.9,
+    2.82,
+    2.88,
+    3.32,
+    3.96,
+    4.18,
+    4.4,
+    4.58,
+    4.96,
+    5.14,
+    5.4,
+    5.76,
+    6.22,
+    6.56,
+    6.86,
+    7.02,
+    7.46,
+    7.76,
+    8.06
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 2.56,
+      "text": "The defendant inflicted severe psychological harm."
+    },
+    {
+      "start": 2.82,
+      "end": 6.22,
+      "text": "The prosecution urges the court to impose a long prison sentence"
+    },
+    {
+      "start": 6.22,
+      "end": 8.48,
+      "text": "to protect the community and deliver justice."
+    }
+  ]
+}

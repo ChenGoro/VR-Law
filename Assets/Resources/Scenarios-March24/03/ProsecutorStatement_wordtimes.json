@@ -1,0 +1,68 @@
+{
+  "audio_file": "ProsecutorStatement.mp3",
+  "language": "en",
+  "duration": 7.1053125,
+  "text": " \n\tThe allegation is supported by DNA evidence and security-camera footage. \n\tDoe poses a danger to the community and the complainant if released.",
+  "words": [
+    "The",
+    "allegation",
+    "is",
+    "supported",
+    "by",
+    "DNA",
+    "evidence",
+    "and",
+    "security",
+    "camera",
+    "footage.",
+    "DOE",
+    "poses",
+    "a",
+    "danger",
+    "to",
+    "the",
+    "community",
+    "and",
+    "the",
+    "complainant",
+    "if",
+    "released."
+  ],
+  "wordTimes": [
+    0.0,
+    0.16,
+    0.66,
+    0.78,
+    1.12,
+    1.36,
+    1.8,
+    2.26,
+    2.46,
+    2.8,
+    3.2,
+    3.98,
+    4.22,
+    4.46,
+    4.64,
+    4.88,
+    5.08,
+    5.2,
+    5.54,
+    5.74,
+    5.84,
+    6.34,
+    6.46
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 3.7,
+      "text": "The allegation is supported by DNA evidence and security camera footage."
+    },
+    {
+      "start": 3.98,
+      "end": 6.76,
+      "text": "DOE poses a danger to the community and the complainant if released."
+    }
+  ]
+}

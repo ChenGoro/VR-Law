@@ -1,0 +1,56 @@
+{
+  "audio_file": "ProsecutorStatement.mp3",
+  "language": "en",
+  "duration": 5.27675,
+  "text": "The defendant committed murder. A life sentence is necessary to serve the goals of deterrence and retribution.",
+  "words": [
+    "The",
+    "defendant",
+    "committed",
+    "murder.",
+    "A",
+    "life",
+    "sentence",
+    "is",
+    "necessary",
+    "to",
+    "serve",
+    "the",
+    "goals",
+    "of",
+    "deterrence",
+    "and",
+    "retribution."
+  ],
+  "wordTimes": [
+    0.0,
+    0.14,
+    0.44,
+    0.82,
+    1.52,
+    1.56,
+    1.76,
+    2.02,
+    2.26,
+    2.7,
+    2.86,
+    3.1,
+    3.24,
+    3.46,
+    3.64,
+    4.16,
+    4.28
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 1.18,
+      "text": "The defendant committed murder."
+    },
+    {
+      "start": 1.52,
+      "end": 4.84,
+      "text": "A life sentence is necessary to serve the goals of deterrence and retribution."
+    }
+  ]
+}
